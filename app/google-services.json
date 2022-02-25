@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784826638614",
+    "firebase_url": "https://pet-retail-default-rtdb.firebaseio.com",
+    "project_id": "pet-retail",
+    "storage_bucket": "pet-retail.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784826638614:android:eff9daf7ca22c87d943037",
+        "android_client_info": {
+          "package_name": "com.uqac.pet_retail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784826638614-1mgsro5a3ior9qph6hp0d8t812vmkuda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlHEYi0ZTQKlooBPVvHwX99BSPwe6Ri-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784826638614-1mgsro5a3ior9qph6hp0d8t812vmkuda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
