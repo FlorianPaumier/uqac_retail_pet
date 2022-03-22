@@ -3,7 +3,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -22,4 +22,20 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_in_login"><u>Sign In</u></string>
+    <string name="your_email">Your Email</string>
+    <string name="remember_me">Remember me</string>
+    <string name="you_don_t_have_an_account">You don\'t have an account ?</string>
+    <string name="or_login_with">Or Login with</string>
+    <string name="google_id_secret">784826638614-ksk3tta9qa7pivteb6ad4ndjm20r5iql.apps.googleusercontent.com</string>
+    <string name="action_sign_up">Sign Up</string>
+    <string name="accept_cgu">
+        I agree to the
+    </string>
+    <string name="cgu_term"><u>Term and Conditions</u></string>
+    <string name="policy_term"><u>Privacy Policy</u></string>
+    <string name="choose_a_pet"><b>Choose</b> a pet</string>
+    <string name="filter">Filter</string>
+    <string name="available">Pet Available</string>
 </resources>

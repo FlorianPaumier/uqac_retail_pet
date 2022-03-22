@@ -1,11 +1,55 @@
 <resources>
-
     <style name="Widget.Theme.Petretail.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="Widget.Theme.Petretail.ButtonBar.Fullscreen" parent="">
-        <item name="android:background">@color/black_overlay</item>
-        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    <style name="sign_in">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="your_email">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+
+    <style name="chooseAPet">
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+    </style>
+
+    <style name="filter">
+
+        <item name="android:textSize">
+            20sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
+
+    </style>
+
+    <style name="available">
+
+        <item name="android:textSize">
+            20sp
+        </item>
+
+        <item name="android:textColor">
+            #000000
+        </item>
     </style>
 </resources>

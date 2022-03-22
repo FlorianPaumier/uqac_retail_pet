@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true"
+    card_view:cardCornerRAdius="5dp">
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:iss_delay="0"
+        app:iss_period="3000"
+        app:iss_placeholder="@color/black"
+        app:iss_error_image="@drawable/dog"
+        android:id="@+id/slider"
+        app:iss_corner_radius="20"
+        android:layout_margin="20dp"
+        android:background="@drawable/dog"/>
+
+
+
+
+
+</androidx.cardview.widget.CardView>

@@ -8,17 +8,24 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.data.model.LoggedInUser
+import com.uqac.pet_retail.databinding.ActivityLoginBinding
+import com.uqac.pet_retail.databinding.ActivityRegisterBinding
 import com.uqac.pet_retail.ui.home.HomeActivity
 import com.uqac.pet_retail.ui.login.EXTRA_MESSAGE
 import com.uqac.pet_retail.ui.login.LoginActivity
+import com.uqac.pet_retail.ui.login.LoginViewModel
+import com.uqac.pet_retail.ui.login.LoginViewModelFactory
 
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,14 +34,43 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val username = binding.registerEmail
+        val password = binding.registerPassword
+        val passwordConfirmation = binding.registerPasswordConfirmation
+
         setContentView(R.layout.activity_register)
         mAuth = FirebaseAuth.getInstance();
 
-        val buttonValidation = findViewById<Button>(R.id.register_validation)
-        val buttonSignIn = findViewById<Button>(R.id.register_sign_in_button)
+        val buttonValidation = findViewById<Button>(R.id.sign_up_button)
+        val buttonSignIn = findViewById<TextView>(R.id.sign_in_button)
         buttonValidation.setOnClickListener(this)
         buttonSignIn.setOnClickListener(this)
         database = Firebase.database.reference
+
+        //region registration model
+        val registerViewModel = ViewModelProvider(this, RegisterViewModelFactory())[RegisterViewModel::class.java]
+
+        registerViewModel.loginFormState.observe(this@RegisterActivity, Observer {
+            val loginState = it ?: return@Observer
+
+            // disable login button unless both username / password is valid
+            buttonValidation?.isEnabled = loginState.isDataValid
+
+            if (loginState.usernameError != null) {
+                username.error = getString(loginState.usernameError)
+            }
+            if (loginState.passwordError != null) {
+                password.error = getString(loginState.passwordError)
+            }
+            if (loginState.passwordConfirmationError != null) {
+                passwordConfirmation.error = getString(loginState.passwordConfirmationError)
+            }
+        })
+        //endregion
     }
 
     override fun onStart() {
@@ -76,8 +112,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when(view?.id){
-            R.id.register_validation -> signUp()
-            R.id.register_sign_in_button -> goToSignIn()
+            R.id.sign_up_button -> signUp()
+            R.id.sign_in_button -> goToSignIn()
         }
     }
 

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/choose_a_pe"
+                android:layout_width="233dp"
+                android:layout_height="44dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center_horizontal|top"
+                android:text="@string/choose_a_pet"
+                android:textAppearance="@style/chooseAPet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="381dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="56dp"
+                android:scrollbars="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choose_a_pe">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:divider="@drawable/empty_tall_divider"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <Button
+                        style="none"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_actif"
+                        android:padding="0dp"
+                        android:text="All"
+                        android:textColor="@color/black" />
+
+                    <ImageButton
+                        android:id="@+id/cat_filter_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="cat logo"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/cat_svg" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="TODO"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_turtle" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="TODO"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_rabbit" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="TODO"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_mouse_pet" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="TODO"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_horse" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_border_transparent"
+                        android:contentDescription="TODO"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_dog" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+                <TextView
+                    android:id="@+id/pet_available_title"
+                    android:layout_width="136dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="64dp"
+                    android:gravity="center_horizontal|top"
+                    android:text="@string/available"
+                    android:textAppearance="@style/available"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/filter"
+                    android:layout_width="50dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="64dp"
+                    android:layout_toStartOf="@id/filter_btn"
+                    android:gravity="center_horizontal|top"
+                    android:text="@string/filter"
+                    android:textAppearance="@style/filter" />
+
+                <ImageButton
+                    android:id="@+id/filter_btn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@color/fui_transparent"
+                    android:contentDescription="cat logo"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_filter" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView1"
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:text="John Doe"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/user_name"
+                            android:layout_alignTop="@id/user_name"
+                            android:layout_marginTop="40dp"
+                            android:text="John Doe" />
+
+                        <Button
+                            android:layout_width="165dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/card_btn"
+                            android:text="Details" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="360dp"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:clickable="false"
+                            android:contentDescription="image of pet"
+                            android:translationY="-50dp"
+                            tools:srcCompat="@tools:sample/avatars"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/user_name1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:text="John Doe"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/user_name"
+                            android:layout_alignTop="@id/user_name"
+                            android:layout_marginTop="40dp"
+                            android:text="John Doe" />
+
+                        <Button
+                            android:layout_width="165dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/card_btn"
+                            android:text="Details" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="360dp"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:clickable="false"
+                            android:contentDescription="image of pet"
+                            android:translationY="-50dp"
+                            tools:srcCompat="@tools:sample/avatars"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/user_name2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:text="John Doe"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/user_name"
+                            android:layout_alignTop="@id/user_name"
+                            android:layout_marginTop="40dp"
+                            android:text="John Doe" />
+
+                        <Button
+                            android:layout_width="165dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/card_btn"
+                            android:text="Details" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="360dp"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:clickable="false"
+                            android:contentDescription="image of pet"
+                            android:translationY="-50dp"
+                            tools:srcCompat="@tools:sample/avatars"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/user_name3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:text="John Doe"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/user_name"
+                            android:layout_alignTop="@id/user_name"
+                            android:layout_marginTop="40dp"
+                            android:text="John Doe" />
+
+                        <Button
+                            android:layout_width="165dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/card_btn"
+                            android:text="Details" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="360dp"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:cardMaxElevation="12dp"
+                    app:cardPreventCornerOverlap="true">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:clickable="false"
+                            android:contentDescription="image of pet"
+                            android:translationY="-50dp"
+                            tools:srcCompat="@tools:sample/avatars"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/user_name4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:text="John Doe"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/user_name"
+                            android:layout_alignTop="@id/user_name"
+                            android:layout_marginTop="40dp"
+                            android:text="John Doe" />
+
+                        <Button
+                            android:layout_width="165dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/card_btn"
+                            android:text="Details" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
