@@ -1,5 +1,6 @@
 package com.uqac.pet_retail.ui.login
 
+import com.uqac.pet_retail.ui.home.HomeActivity
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -33,7 +34,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityLoginBinding
-import com.uqac.pet_retail.ui.home.HomeActivity
 import com.uqac.pet_retail.ui.register.RegisterActivity
 
 
@@ -184,7 +184,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account !== null && currentUser !== null) {
-            loginSucces(currentUser)
+            loginSuccess(currentUser)
         }
     }
 
@@ -237,7 +237,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = mAuth?.currentUser
-                    loginSucces(user)
+                    loginSuccess(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -269,14 +269,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     // Sign in success, update UI with the signed-in user's information
                     Log.w(TAG, "signInWithEmail:success")
                     val user = mAuth!!.currentUser
-                    this.loginSucces(user)
+                    this.loginSuccess(user)
                 } else {
                     this.failLogin(task)
                 }
             }
     }
 
-    private fun loginSucces(user: FirebaseUser?) {
+    private fun loginSuccess(user: FirebaseUser?) {
         val intent = Intent(this, HomeActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, "Bienvenue : " + user?.displayName)
         }

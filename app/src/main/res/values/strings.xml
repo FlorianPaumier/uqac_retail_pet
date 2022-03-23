@@ -38,6 +38,10 @@
     <string name="choose_a_pet"><b>Choose</b> a pet</string>
     <string name="filter">Filter</string>
     <string name="available">Pet Available</string>
-    <string name="type_a_message">Type a message</string>
-
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="chat">Chat</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_have_an_account">Already have an acoount?</string>
+    <string name="mes_annonces">My announcements</string>
 </resources>

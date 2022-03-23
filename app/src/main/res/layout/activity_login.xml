@@ -154,8 +154,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             app:srcCompat="@drawable/googleg_standard_color_18" />
     </RelativeLayout>
 
@@ -245,7 +244,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="140dp"
             android:gravity="start"
-            android:text="@string/sign_in_login"
+            android:text="@string/sign_up"
             android:textColor="#1D4ED8"
             android:textSize="11sp"
             app:layout_constraintStart_toEndOf="@+id/text_no_account" />

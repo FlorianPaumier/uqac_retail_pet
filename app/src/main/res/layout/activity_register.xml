@@ -184,7 +184,7 @@
             android:layout_width="140dp"
             android:layout_height="14dp"
             android:gravity="start"
-            android:text="@string/you_don_t_have_an_account"
+            android:text="@string/already_have_an_account"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent" />
 

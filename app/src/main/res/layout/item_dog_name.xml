@@ -37,6 +37,7 @@
 
         </LinearLayout>
         <TextView
+            android:id="@+id/dog_name"
             android:text="Jhon Weak"
             android:textStyle="bold"
             android:textColor="@color/black"
