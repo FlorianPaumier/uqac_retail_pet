@@ -11,9 +11,7 @@
         android:padding="8dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-
-        >
+        android:layout_height="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
