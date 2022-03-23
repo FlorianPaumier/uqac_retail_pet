@@ -41,7 +41,7 @@ class RoomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
+        binding.buttonChatHome.setOnClickListener {
             findNavController().navigate(R.id.action_First2Fragment_to_Second2Fragment)
         }
     }

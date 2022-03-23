@@ -44,4 +44,5 @@
     <string name="sign_up">Sign up</string>
     <string name="already_have_an_account">Already have an acoount?</string>
     <string name="mes_annonces">My announcements</string>
+    <string name="type_a_message">Type a message</string>
 </resources>

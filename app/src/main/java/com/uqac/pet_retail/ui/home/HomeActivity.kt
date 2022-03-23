@@ -4,16 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.service.autofill.OnClickAction
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.FirebaseAuth
+import androidx.cardview.widget.CardView
 import com.uqac.pet_retail.R
+import com.uqac.pet_retail.ui.login.EXTRA_MESSAGE
 import com.uqac.pet_retail.databinding.ActivityHomeBinding
 import com.uqac.pet_retail.ui.chat.ChatActivity
 import com.uqac.pet_retail.ui.login.LoginActivity
 import com.uqac.pet_retail.ui.profil.ProfileActivity
-
 
 class HomeActivity : AppCompatActivity() {
 
@@ -25,6 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val card = findViewById<CardView>(R.id.cardView1)
 
         supportActionBar?.title = "Home";
 
@@ -91,6 +95,7 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, ChatActivity::class.java)
         startActivity(intent)
     }
+
 
     private fun goToProfile(profile_id: Int) {
         val intent = Intent(this, ProfileActivity::class.java)
