@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.FirebaseAuth
 import androidx.cardview.widget.CardView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.ui.login.EXTRA_MESSAGE
 import com.uqac.pet_retail.databinding.ActivityHomeBinding
@@ -17,7 +19,7 @@ import com.uqac.pet_retail.ui.chat.ChatActivity
 import com.uqac.pet_retail.ui.login.LoginActivity
 import com.uqac.pet_retail.ui.profil.ProfileActivity
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
@@ -29,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val card = findViewById<CardView>(R.id.cardView1)
-
+        card.setOnClickListener(this)
         supportActionBar?.title = "Home";
 
         //setSupportActionBar(binding.toolbar)
@@ -84,6 +86,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun logout() {
+        Firebase.auth.signOut()
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or
@@ -106,5 +109,14 @@ class HomeActivity : AppCompatActivity() {
     private fun goToProfile() {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onClick(p0: View?) {
+        when(p0?.id){
+            R.id.cardView1 -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

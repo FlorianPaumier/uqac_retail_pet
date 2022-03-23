@@ -2,6 +2,7 @@ package com.uqac.pet_retail.ui.profil
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -55,5 +56,11 @@ class ProfileActivity : AppCompatActivity() {
                 address.text = "2675 Boulevard du Royaume,\n QC G7S 5B8,\nJonquiere"
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
     }
 }
