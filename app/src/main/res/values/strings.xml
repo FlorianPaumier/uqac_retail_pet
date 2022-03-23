@@ -38,4 +38,6 @@
     <string name="choose_a_pet"><b>Choose</b> a pet</string>
     <string name="filter">Filter</string>
     <string name="available">Pet Available</string>
+    <string name="type_a_message">Type a message</string>
+
 </resources>

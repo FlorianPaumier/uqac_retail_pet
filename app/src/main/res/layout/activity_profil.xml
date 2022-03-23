@@ -10,6 +10,8 @@
     android:scrollbars="vertical"
     tools:context=".ui.profil.ProfileActivity">
 
+
+
     <LinearLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"

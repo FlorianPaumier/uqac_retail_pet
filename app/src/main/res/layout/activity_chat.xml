@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatActivity">
+    <LinearLayout
+        android:id="@+id/verticalBar"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
 
-    <com.google.android.material.appbar.AppBarLayout
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background">
+            <ImageView
+                android:padding="5dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_arrow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Jhon Weak"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="300dp"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+
+                />
+
+
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclecleView_send"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@id/verticalBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Petretail.AppBarOverlay">
+        tools:listitem="@layout/fragment_room_send"
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Petretail.PopupOverlay" />
+        />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    <include layout="@layout/fragment_room_receive"/>
+
 
     <include layout="@layout/content_chat" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</RelativeLayout>
