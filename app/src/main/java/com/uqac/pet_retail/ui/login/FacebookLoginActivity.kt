@@ -10,6 +10,7 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginManager
 import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
+import java.util.*
 
 
 /**
@@ -45,27 +47,24 @@ class FacebookLoginActivity : Activity() {
         callbackManager = CallbackManager.Factory.create()
 
         buttonFacebookLogin = findViewById(R.id.fb_login_button)
-        buttonFacebookLogin.setReadPermissions("email", "public_profile")
 
-        buttonFacebookLogin.registerCallback(callbackManager, object : FacebookCallback<com.facebook.login.LoginResult> {
+        callbackManager = CallbackManager.Factory.create()
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"))
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<com.facebook.login.LoginResult> {
             override fun onSuccess(result: com.facebook.login.LoginResult) {
                 Log.d(ContentValues.TAG, "facebook:onSuccess:$result")
                 handleFacebookAccessToken(result.accessToken)
             }
 
             override fun onCancel() {
-                Log.d(ContentValues.TAG, "---------------------")
                 Log.d(ContentValues.TAG, "facebook:onCancel")
-                Log.d(ContentValues.TAG, "---------------------")
             }
 
             override fun onError(error: FacebookException) {
-                Log.d(ContentValues.TAG, "---------------------")
                 Log.d(ContentValues.TAG, "facebook:onError", error)
-                Log.d(ContentValues.TAG, "---------------------")
             }
         })
-        buttonFacebookLogin.performClick()
         // [END initialize_fblogin]
     }
 
@@ -83,10 +82,8 @@ class FacebookLoginActivity : Activity() {
 
     // [START on_activity_result]
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Pass the activity result back to the Facebook SDK
         callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
     // [END on_activity_result]
 
@@ -129,3 +126,4 @@ class FacebookLoginActivity : Activity() {
         private const val TAG = "FacebookLogin"
     }
 }
+
