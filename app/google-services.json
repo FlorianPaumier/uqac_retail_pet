@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "784826638614-8b2t2jrbv4f6ktcr9kr5cqe6i2g2ogjf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uqac.pet_retail",
+            "certificate_hash": "ae82b6371835b265a1f5dbf4be970cd61f5e098f"
+          }
+        },
+        {
           "client_id": "784826638614-1mgsro5a3ior9qph6hp0d8t812vmkuda.apps.googleusercontent.com",
           "client_type": 3
         }

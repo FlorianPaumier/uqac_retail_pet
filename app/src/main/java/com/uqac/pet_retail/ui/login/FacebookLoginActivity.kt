@@ -24,7 +24,7 @@ import java.util.*
 /**
  * Demonstrate Firebase Authentication using a Facebook access token.
  */
-class FacebookLoginActivity : Activity() {
+class FacebookLoginActivity : LoginActivity() {
 
     // [START declare_auth]
     private lateinit var auth: FirebaseAuth
@@ -58,11 +58,11 @@ class FacebookLoginActivity : Activity() {
             }
 
             override fun onCancel() {
-                Log.d(ContentValues.TAG, "facebook:onCancel")
+               failLogin("Cancel Login")
             }
 
             override fun onError(error: FacebookException) {
-                Log.d(ContentValues.TAG, "facebook:onError", error)
+                failLogin(""+error.message)
             }
         })
         // [END initialize_fblogin]
@@ -98,7 +98,7 @@ class FacebookLoginActivity : Activity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    loginSuccess(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d(ContentValues.TAG, "---------------------")
@@ -106,21 +106,11 @@ class FacebookLoginActivity : Activity() {
                     Log.d(ContentValues.TAG, "---------------------")
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    updateUI(null)
+                    failLogin("" + task.exception?.message)
                 }
             }
     }
     // [END auth_with_facebook]
-
-    private fun updateUI(user: FirebaseUser?) {
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-        Log.d(ContentValues.TAG, "---------------------")
-    }
 
     companion object {
         private const val TAG = "FacebookLogin"

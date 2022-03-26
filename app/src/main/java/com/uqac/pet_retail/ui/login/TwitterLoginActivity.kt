@@ -18,7 +18,7 @@ import com.uqac.pet_retail.R
 import com.uqac.pet_retail.ui.home.HomeActivity
 
 
-class TwitterLoginActivity : AppCompatActivity() {
+class TwitterLoginActivity : LoginActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var btnTwitter: Button
@@ -38,33 +38,23 @@ class TwitterLoginActivity : AppCompatActivity() {
             // There's something already here! Finish the sign-in for your user.
             pendingResultTask
                 .addOnSuccessListener(
-                    OnSuccessListener<AuthResult?> {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
+                    OnSuccessListener<AuthResult?> { authResult ->
+                        loginSuccess(authResult.user)
                     })
                 .addOnFailureListener(
-                    OnFailureListener {
-                        Log.w(TAG, pendingResultTask.exception.toString())
-                        val intent = Intent(this, LoginActivity::class.java).apply {
-                            putExtra(EXTRA_MESSAGE, "Erreur de connexion")
-                        }
-                        startActivity(intent)
+                    OnFailureListener { exception ->
+                        failLogin("" + exception.message)
                     })
         } else {
             mAuth
                 .startActivityForSignInWithProvider( /* activity= */this, provider.build())
                 .addOnSuccessListener(
-                    OnSuccessListener<AuthResult?> {
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
+                    OnSuccessListener<AuthResult?> { authResult ->
+                        loginSuccess(authResult.user)
                     })
                 .addOnFailureListener(
-                    OnFailureListener {
-                        exception -> Log.w(TAG, ""+exception.message)
-                        val intent = Intent(this, LoginActivity::class.java).apply {
-                            putExtra(EXTRA_MESSAGE, "Erreur de connexion")
-                        }
-                        startActivity(intent)
+                    OnFailureListener { exception ->
+                        failLogin("" + exception.message)
                     })
         }
     }

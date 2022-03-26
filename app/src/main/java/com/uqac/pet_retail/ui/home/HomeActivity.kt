@@ -1,10 +1,12 @@
 package com.uqac.pet_retail.ui.home
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.service.autofill.OnClickAction
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
@@ -34,6 +36,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         card.setOnClickListener(this)
         supportActionBar?.title = "Home";
 
+        val auth = Firebase.auth
+        val user = auth.currentUser
+
+        Log.w(TAG, ""+user?.uid)
         //setSupportActionBar(binding.toolbar)
 
 //        val navController = findNavController(R.id.nav_host_fragment_content_home)

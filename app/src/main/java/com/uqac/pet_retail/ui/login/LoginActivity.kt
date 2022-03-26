@@ -28,14 +28,13 @@ import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityLoginBinding
 import com.uqac.pet_retail.ui.home.HomeActivity
 import com.uqac.pet_retail.ui.register.RegisterActivity
+import java.lang.Exception
 
 
 const val EXTRA_MESSAGE = "com.example.pet_retail.MESSAGE"
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+open class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val RC_SIGN_IN: Int = 9001
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private var mAuth: FirebaseAuth? = null
@@ -56,9 +55,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val twitterSignInButton = binding.twitterLoginBtn
 
         mAuth = FirebaseAuth.getInstance()
-
-        // clientId S1cwX0RmNm5LRlJ4dmt0LVFQamI6MTpjaQ
-        // clientSecret KZBya5Jn6uDBNmZYWi129kWXGHmLAhZres3bWkN3E1NmGW2-va
 
         //region default login
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
@@ -134,16 +130,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         googleSignInButton?.setOnClickListener(this)
         //endregion
 
-        //region Login Google
-        Log.w(TAG, getString(R.string.google_id_secret))
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.google_id_secret))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        //endregion
-
     }
 
     override fun onStart() {
@@ -164,8 +150,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
         when (v?.id) {
-            R.id.google_login_btn -> signInGoogle()
-            R.id.sign_up_button -> gotToSignUp()
+            R.id.google_login_btn -> {
+                val signInIntent = Intent(this, GoogleLoginActivity::class.java)
+                startActivity(signInIntent)
+            }
+            R.id.sign_up_button -> {
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivity(intent)
+            }
             R.id.facebook_login_button -> {
                 val intent = Intent(this, FacebookLoginActivity::class.java)
                 startActivity(intent)
@@ -175,56 +167,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
-    }
-
-    private fun signInGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivity(signInIntent)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        println("requestCode : $requestCode")
-        println("resultCode : $resultCode")
-        Log.d("Info","data : ${data?.dataString}")
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
-                Log.w(TAG, "" + e.message)
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        mAuth?.signInWithCredential(credential)
-            ?.addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = mAuth?.currentUser
-                    loginSuccess(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    failLogin(task)
-                }
-            }
-    }
-
-    private fun gotToSignUp() {
-        val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent)
     }
 
     private fun signIn() {
@@ -247,50 +189,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val user = mAuth!!.currentUser
                     this.loginSuccess(user)
                 } else {
-                    this.failLogin(task)
+                    this.failLogin(""+task.exception?.message)
                 }
             }
     }
 
-    private fun loginSuccess(user: FirebaseUser?) {
+    fun loginSuccess(user: FirebaseUser?) {
         val intent = Intent(this, HomeActivity::class.java).apply {
             putExtra(EXTRA_MESSAGE, "Bienvenue : " + user?.displayName)
         }
         startActivity(intent)
     }
 
-    private fun failLogin(task: Task<AuthResult>) {
+    fun failLogin(exception: String) {
         // If sign in fails, display a message to the user.
-        Log.w(TAG, "signInWithEmail:failure", task.exception)
+        Log.w(TAG, "signInWithEmail:failure$exception")
         Toast.makeText(
             this, "Authentication failed.",
             Toast.LENGTH_SHORT
         ).show()
-    }
 
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d(TAG, "handleFacebookAccessToken:$token")
-
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        mAuth?.signInWithCredential(credential)
-            ?.addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = mAuth?.currentUser
-                    val intent = Intent(this, HomeActivity::class.java).apply {
-                        putExtra(EXTRA_MESSAGE, "Bienvenue : " + user?.displayName)
-                    }
-                    startActivity(intent)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        this, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }
 
