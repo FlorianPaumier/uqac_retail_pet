@@ -46,4 +46,7 @@
     <string name="mes_annonces">My announcements</string>
     <string name="type_a_message">Type a message</string>
     <string name="home">Home</string>
+    <string name="facebook_app_id">487533726350076</string>
+    <string name="facebook_client_token">21461748c9ccbd53a4231a9f3a0038fa</string>
+    <string name="fb_login_protocol_scheme">fb487533726350076</string>
 </resources>

@@ -1,10 +1,8 @@
 package com.uqac.pet_retail.ui.login
 
-import com.uqac.pet_retail.ui.home.HomeActivity
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.nfc.Tag
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,21 +17,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
 import com.facebook.login.widget.LoginButton
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityLoginBinding
+import com.uqac.pet_retail.ui.home.HomeActivity
 import com.uqac.pet_retail.ui.register.RegisterActivity
 
 
@@ -64,7 +57,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance()
 
-        val provider = OAuthProvider.newBuilder("23719345")
         // clientId S1cwX0RmNm5LRlJ4dmt0LVFQamI6MTpjaQ
         // clientSecret KZBya5Jn6uDBNmZYWi129kWXGHmLAhZres3bWkN3E1NmGW2-va
 
@@ -152,29 +144,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         //endregion
 
-        // Initialize Facebook Login button
-
-        //region Fb Login
-        val callbackManager = CallbackManager.Factory.create()
-
-        val fbLoginButton = findViewById<LoginButton>(R.id.fb_login_button)
-        fbLoginButton.setPermissions("email", "public_profile")
-        fbLoginButton.registerCallback(callbackManager, object : FacebookCallback<com.facebook.login.LoginResult> {
-            override fun onSuccess(result: com.facebook.login.LoginResult) {
-                Log.d(TAG, "facebook:onSuccess:$result")
-                handleFacebookAccessToken(result.accessToken)
-            }
-
-            override fun onCancel() {
-                Log.d(TAG, "facebook:onCancel")
-            }
-
-            override fun onError(error: FacebookException) {
-                Log.d(TAG, "facebook:onError", error)
-            }
-        })
-
-        //endregion
     }
 
     override fun onStart() {
@@ -197,13 +166,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id) {
             R.id.google_login_btn -> signInGoogle()
             R.id.sign_up_button -> gotToSignUp()
-            R.id.facebook_login_button -> fbLoginButton?.performClick()
+            R.id.facebook_login_button -> {
+                val intent = Intent(this, FacebookLoginActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.twitter_login_btn -> {
+                val intent = Intent(this, TwitterLoginActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
     private fun signInGoogle() {
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivity(signInIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

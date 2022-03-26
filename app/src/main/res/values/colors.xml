@@ -13,5 +13,9 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="blue">#0039e6</color>
+    <color name="com_facebook_button_background_color_focused_disabled">#0039e6</color>
+    <color name="com_facebook_button_background_color_focused">#0039e6</color>
+    <color name="com_facebook_button_send_background_color_pressed">#0039e6</color>
+    <color name="com_facebook_button_border_color_focused">#0039e6</color>
 
 </resources>
