@@ -7,7 +7,7 @@
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <queries>
         <package android:name="com.facebook.katana" />
@@ -25,16 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Petretail">
         <activity
+            android:name=".ui.chat.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.profil.AnnonceActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="true" >
         </activity>
         <activity
             android:name=".ui.login.GoogleLoginActivity"
@@ -74,13 +72,18 @@
             android:name=".ui.profil.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.chat.ChatActivity"
+            android:name=".ui.chat.RoomActivity"
             android:exported="true"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:label="@string/title_activity_chat" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="true"

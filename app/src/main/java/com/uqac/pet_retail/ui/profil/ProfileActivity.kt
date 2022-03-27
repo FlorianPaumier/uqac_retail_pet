@@ -1,15 +1,30 @@
 package com.uqac.pet_retail.ui.profil
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.core.Tag
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 
 
 class ProfileActivity : AppCompatActivity() {
+
+    private lateinit var bdd: CollectionReference
+    private lateinit var profile: DocumentReference
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +37,32 @@ class ProfileActivity : AppCompatActivity() {
         val address = findViewById<View>(R.id.address) as TextView
         var profileid = intent.getStringExtra("profile_id")
         println(profileid)
-        when(profileid){
+
+        val user = FirebaseAuth.getInstance().currentUser
+        bdd = Firebase.firestore.collection("profile")
+
+        bdd.whereEqualTo("user", user?.uid)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.count() == 0) {
+                    val newProfile = hashMapOf(
+                        "user" to user?.uid
+                    )
+
+                    bdd.add(newProfile)
+                } else {
+                    for (document in documents) {
+                        Log.w(TAG, "ID : " + document.id)
+                        profile = document.reference
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+            }
+
+
+        when (profileid) {
             "1" -> {
                 dogname.text = "Arlo"
                 dogage.text = "20 Kg"
@@ -56,11 +96,5 @@ class ProfileActivity : AppCompatActivity() {
                 address.text = "2675 Boulevard du Royaume,\n QC G7S 5B8,\nJonquiere"
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_home, menu)
-        return true
     }
 }

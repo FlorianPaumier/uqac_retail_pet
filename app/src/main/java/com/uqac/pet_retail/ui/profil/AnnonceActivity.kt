@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -22,6 +23,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityAnnonceBinding
 
@@ -46,6 +48,9 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener {
         val btnPictures = findViewById<Button>(R.id.add_pictures)
         val previous = binding.prevPicture
         val next = binding.nextPicture
+
+        // Todo add id if exist
+        val idPet = findViewById<EditText>(R.id.pet_id)
 
         // showing all images in imageswitcher
 
@@ -143,28 +148,73 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener {
         val petTimeMorning = binding.petTimeMorning.isChecked
         val petTimeAfternoon = binding.petTimeAfternoon.isChecked
         val petTimeNight = binding.petTimeNight.isChecked
+        val petType = binding.petType.selectedItem.toString()
+        val petRace = binding.petRace.text.toString()
         val petDescription = binding.petDescription.text.toString()
 
+        val address = hashMapOf(
+            "address" to binding.address.text.toString(),
+            "country" to binding.country.text.toString(),
+            "city" to binding.city.text.toString(),
+            "zipCode" to binding.zipCode.text.toString()
+        )
+
         val db = Firebase.firestore
+        val storage = Firebase.storage("gs://pet-retail.appspot.com")
+        val ref = storage.reference.child("annonce")
+
+        val picturesId = ArrayList<String?>()
+
+        for (i in 0 until pictures.count()) {
+            if (pictures[i] !== null) {
+                val uri: Uri = pictures[i]!!
+                val uploadTask = ref.putFile(uri)
+
+                val urlTask = uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    ref.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        picturesId.add(task.result.path)
+                    } else {
+                        Toast.makeText(this, "Erreur Upload", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        if (picturesId.count() != pictures.count()){
+            return;
+        }
 
         val user = FirebaseAuth.getInstance().currentUser
 
         val annonce = hashMapOf(
             "name" to petName,
-            "address" to petAddress,
+            "type" to petType,
+            "race" to petRace,
+            "address" to address,
             "morning_time" to petTimeMorning,
             "afternoon_time" to petTimeAfternoon,
             "night_time" to petTimeNight,
             "description" to petDescription,
             "user" to user?.uid,
-            "picture" to pictures
+            "picture" to picturesId
         )
 
         db.collection("annonce")
             .add(annonce)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "Annonce added with ID: ${documentReference.id}")
-                Toast.makeText(this, "Annonce added with ID: ${documentReference.id}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Annonce added with ID: ${documentReference.id}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
             }
@@ -190,7 +240,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_MULTIPLE){
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_MULTIPLE) {
 
             // if multiple images are selected
             if (data?.getClipData() != null) {

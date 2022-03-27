@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.service.autofill.OnClickAction
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +14,8 @@ import androidx.cardview.widget.CardView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
-import com.uqac.pet_retail.ui.login.EXTRA_MESSAGE
 import com.uqac.pet_retail.databinding.ActivityHomeBinding
-import com.uqac.pet_retail.ui.chat.ChatActivity
+import com.uqac.pet_retail.ui.chat.RoomActivity
 import com.uqac.pet_retail.ui.login.LoginActivity
 import com.uqac.pet_retail.ui.profil.ProfileActivity
 
@@ -101,7 +99,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun goToChat() {
-        val intent = Intent(this, ChatActivity::class.java)
+        val intent = Intent(this, RoomActivity::class.java)
         startActivity(intent)
     }
 
