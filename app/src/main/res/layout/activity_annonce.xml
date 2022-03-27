@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profil.AnnonceActivity">
+
+
+    <LinearLayout
+        android:id="@+id/pet_info_supp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Name"/>
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                tools:layout_editor_absoluteX="33dp"
+                tools:layout_editor_absoluteY="44dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Type"/>
+            <Spinner
+                android:id="@+id/pet_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/weight" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Type"/>
+            <EditText
+                android:id="@+id/pet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Noopie"
+                tools:layout_editor_absoluteX="172dp"
+                tools:layout_editor_absoluteY="169dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="Weigth"/>
+            <EditText
+                android:id="@+id/pet_race"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                tools:layout_editor_absoluteX="33dp"
+                tools:layout_editor_absoluteY="44dp" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/pet_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/pet_time_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Morning Time"
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="409dp" />
+
+        <CheckBox
+            android:id="@+id/pet_time_afternoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Afternoon time"
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="412dp" />
+
+        <CheckBox
+            android:id="@+id/pet_time_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="night time"
+            tools:layout_editor_absoluteX="134dp"
+            tools:layout_editor_absoluteY="456dp" />
+        <EditText
+            android:id="@+id/pet_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:text="Hello"
+            app:layout_constraintTop_toBottomOf="@id/pet_time_night"
+            tools:layout_editor_absoluteX="82dp"
+            tools:layout_editor_absoluteY="595dp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/add_pictures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add pictures"
+        app:layout_constraintTop_toBottomOf="@id/pet_info_supp" />
+
+    <ImageSwitcher
+        android:id="@+id/pet_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/add_pictures" />
+
+    <Button
+        android:id="@+id/prev_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prev"
+        app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+
+    <Button
+        android:id="@+id/next_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        app:layout_constraintLeft_toRightOf="@id/prev_picture"
+        app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+
+
+
+    <Button
+        android:id="@+id/valid_annonce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintTop_toBottomOf="@id/next_picture"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="683dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

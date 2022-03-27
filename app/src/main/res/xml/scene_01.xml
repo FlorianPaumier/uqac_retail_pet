@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:motion="http://schemas.android.com/apk/res-auto">
+<MotionScene xmlns:motion="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Transition
-        motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/start"
         motion:duration="1000">
         <OnSwipe
-            motion:touchAnchorId="@+id/button"
+            motion:dragDirection="dragRight"
             motion:touchAnchorSide="right"
-            motion:dragDirection="dragRight" />
+            motion:touchAnchorId="@id/button"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -18,13 +18,21 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginStart="8dp"
+            android:elevation="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toTopOf="parent">
-            <CustomAttribute
-                motion:attributeName="backgroundColor"
-                motion:customColorValue="#D81B60" />
-        </Constraint>
+            motion:layout_constraintTop_toTopOf="parent"/>
+
+        <Constraint
+            android:id="@+id/imageView"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:alpha="1"
+            android:scaleX="1"
+            android:scaleY="1"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -33,13 +41,19 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginEnd="8dp"
+            android:elevation="20dp"
+            motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent">
-            <CustomAttribute
-                motion:attributeName="backgroundColor"
-                motion:customColorValue="#9999FF" />
-        </Constraint>
+            motion:layout_constraintEnd_toEndOf="parent"/>
+
+        <Constraint
+            android:id="@+id/imageView"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:alpha="0.5"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"/>
     </ConstraintSet>
 
 </MotionScene>
