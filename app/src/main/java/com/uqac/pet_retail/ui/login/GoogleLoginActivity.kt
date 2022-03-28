@@ -35,6 +35,7 @@ class GoogleLoginActivity : LoginActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_twitter_login)
 
+        return;
         // [START config_signin]
         // Configure Google Sign In
 

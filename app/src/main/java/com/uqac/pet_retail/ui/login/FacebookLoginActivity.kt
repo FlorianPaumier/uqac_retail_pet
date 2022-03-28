@@ -36,6 +36,7 @@ class FacebookLoginActivity : LoginActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_facebook_login)
+        return;
         // [START initialize_auth]
         // Initialize Firebase Auth
         auth = Firebase.auth
