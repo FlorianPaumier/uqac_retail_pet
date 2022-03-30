@@ -1,33 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatActivity">
+<!--
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-    <Button
-        android:id="@+id/return_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Return"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        >
+        <LinearLayout
+            android:padding="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#ccddff"
+            android:outlineSpotShadowColor="@color/black"
+            >
 
+            <ImageView
+                android:id="@+id/return_room"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="2dp"
+                android:clickable="true"
+                android:padding="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/ic_row_lo"
+                />
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:text="Salim"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:paddingBottom="10dp"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+  -->
+    <LinearLayout
+        android:id="@+id/chat_bar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/chat_bar_background">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/return_room"
+
+                android:padding="5dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/row_back_chat"
+                android:layout_width="80dp"
+                android:layout_height="90dp"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="95dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:padding="1dp"
+                android:text="salim"
+                />
+
+            <ImageView
+
+                android:layout_margin="5dp"
+                android:padding="1dp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="45dp"
+                android:layout_height="45dp"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="45dp"
+                android:layout_height="55dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:elevation="5dp"
+                android:padding="5dp"
+                android:src="@drawable/slider"
+                app:shapeAppearanceOverlay="@style/Circular" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/user_presentation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chat_bar"
+        >
 
-        <ImageView
-            android:id="@+id/profile_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,9 +134,12 @@
         android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="750dp"
+        android:layout_above="@id/linearLayout"
+        android:layout_below="@id/user_presentation"
+        android:layout_marginTop="50dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/return_room" />
+        app:layout_constraintTop_toBottomOf="" />
 
     <LinearLayout
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,28 +150,37 @@
         android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:weightSum="100">
-
+<LinearLayout
+    android:id="@+id/messageLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:background="@drawable/chat_message_background"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp">
         <EditText
             android:id="@+id/messageBox"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="85"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
             android:autofillHints="message"
-            android:background="@drawable/edit_background"
             android:hint="@string/type_a_message"
+
             android:inputType="text"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp" />
+
+            />
 
         <ImageView
             android:id="@+id/sentButton"
-            android:layout_width="50dp"
+android:clickable="true"
+            android:layout_width="80dp"
             android:layout_height="50dp"
-            android:layout_weight="20"
+            android:layout_gravity="center"
             android:contentDescription="@android:string/yes"
-            android:src="@drawable/send" />
-
+            android:src="@drawable/sent_chat_message" />
+</LinearLayout>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/send_message_success"
             android:layout_width="50dp"
@@ -120,4 +217,4 @@
             app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_zcfq4d9q.json" />
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
