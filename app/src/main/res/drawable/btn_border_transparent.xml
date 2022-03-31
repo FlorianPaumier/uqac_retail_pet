@@ -3,9 +3,9 @@
     android:shape="rectangle" >
 
     <gradient android:angle="0" android:startColor="@color/fui_transparent" android:centerColor="@color/fui_transparent" android:endColor="@color/fui_transparent"/>
-    <corners android:radius="10dp"/>
+    <corners android:radius="20dp"/>
     <stroke
         android:width="2dp"
-        android:color="@color/black" />
+        android:color="@color/blue" />
 
 </shape>

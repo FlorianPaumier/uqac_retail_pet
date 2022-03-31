@@ -23,6 +23,8 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_up_with_googmle">Sign up with google</string>
+
     <string name="sign_in_login"><u>Sign In</u></string>
     <string name="your_email">Your Email</string>
     <string name="remember_me">Remember me</string>

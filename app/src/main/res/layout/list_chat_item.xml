@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:id="@+id/cardRoom"
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/message_id"
         android:visibility="gone"
@@ -14,48 +17,132 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:visibility="gone"
+   <!--
+        <RelativeLayout
+            android:visibility=""
             android:gravity="right"
             android:id="@+id/message_user_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_background"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp">
             <TextView
                 android:id="@+id/message_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart=""
+                android:text="Type message"/>
+
+            <CheckBox
+                android:id="@+id/message_user_read"
+                android:enabled="false"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/message_user_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox
-                android:id="@+id/message_user_read"
-                android:enabled="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="left"
-            android:visibility="gone"
-            android:id="@+id/message_other_container"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/message_user_read"
+
+                android:text="17:30 29-03-2022"/>
+        </RelativeLayout>
+    -->
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp"
+        >
+<LinearLayout
+    android:id="@id/message_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:background="@drawable/send_message_background"
+    >
+
+    <TextView
+        android:id="@+id/txt_receive_message"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:text="This is sent message "
+        android:textColor="@color/white"
+
+        android:textSize="10sp" />
+    <CheckBox
+        android:id="@+id/message_user_read"
+        android:enabled="false"
+        android:layout_alignParentStart="true"
+        android:buttonTint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+        <TextView
+            android:id="@+id/message_user_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/message_other"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/message_other_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <CheckBox
-                android:id="@+id/message_other_read"
-                android:enabled="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message_id"
+            android:padding="10sp"
+            android:layout_alignParent="true"
+            android:textColor="@color/blue"
+            android:text="17:30 29-03-2022"/>
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        >
+    <LinearLayout
+        android:layout_alignParentRight="true"
+android:background="@drawable/chat_message_background_receive"
+        android:id="@+id/message_other_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:visibility=""
+        android:layout_marginRight="10dp"
+        >
+
+        <TextView
+            android:id="@+id/message_other"
+            android:layout_height="wrap_content"
+            android:text="send message"
+            android:layout_width="230dp"
+            android:padding="10sp"
+
+            />
+        <CheckBox
+            android:id="@+id/message_other_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:buttonTint="@color/blue"/>
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/message_other_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18:30 29-03-2022"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:padding="10sp"
+            android:layout_marginLeft="110dp"
+            android:textColor="@color/blue"
+
+            />
+
+    </RelativeLayout>
+    </LinearLayout>
