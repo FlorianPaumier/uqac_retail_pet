@@ -3,6 +3,7 @@ package com.uqac.pet_retail.ui.chat
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +23,6 @@ import com.uqac.pet_retail.RoomItemAdapter
 import com.uqac.pet_retail.databinding.ActivityRoomBinding
 import org.json.JSONArray
 import org.json.JSONObject
-
-
-
 
 
 class RoomActivity : AppCompatActivity(), View.OnClickListener {
@@ -50,28 +48,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
         bdd = Firebase.firestore
         auth = FirebaseAuth.getInstance().currentUser!!
 
-        val emails: ArrayList<String> = ArrayList<String>()
         users = HashMap<String, String>()
-
-        bdd.collection("profile")
-            .whereNotEqualTo("user", auth.uid).get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    users.put(document.get("email").toString(), document.get("user").toString())
-                    emails.add(document.get("email").toString())
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-            }
-
-        var adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            this,
-            android.R.layout.select_dialog_item, emails
-        )
-
-        val textView = findViewById<AutoCompleteTextView>(R.id.user_research)
-        textView?.setAdapter(adapter)
 
         rv = findViewById<RecyclerView>(R.id.room_container)
         val roomAdapter = RoomItemAdapter(this, data)
@@ -83,7 +60,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
 
                     generateItems(dataSnapshot)
 
-                    Log.e("Data", "onDataChange: "+data.size )
+                    Log.e("Data", "onDataChange: " + data.size)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -98,7 +75,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
 
                     generateItems(dataSnapshot)
 
-                    Log.e("Data", "onDataChange: "+data.size )
+                    Log.e("Data", "onDataChange: " + data.size)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -107,6 +84,27 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
             })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        var users: ArrayList<String> = ArrayList()
+
+        for (room in data){
+            users.add(room.name)
+        }
+
+        var adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.select_dialog_item, users
+        )
+
+        val textView = findViewById<AutoCompleteTextView>(R.id.user_research)
+        textView?.setAdapter(adapter)
+    }
     private fun generateItems(dataSnapshot: DataSnapshot) {
         for (snapshot in dataSnapshot.children) {
             val roomModel = Model()
@@ -139,7 +137,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
                         val lastMessage = dataModel.messages.values.first()
                         roomModel.lastMessage = lastMessage.get("message").toString()
                         roomModel.lastMessageDate = lastMessage.get("date").toString()
-                    }else{
+                    } else {
                         roomModel.lastMessage = "No message"
                         roomModel.lastMessageDate = "None"
                     }

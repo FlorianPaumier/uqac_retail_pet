@@ -1,70 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatActivity">
-<!--
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
-        <LinearLayout
-            android:padding="0dp"
-            android:orientation="horizontal"
+    <!--
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#ccddff"
-            android:outlineSpotShadowColor="@color/black"
-            >
+            android:layout_height="match_parent"
 
-            <ImageView
-                android:id="@+id/return_room"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="2dp"
-                android:clickable="true"
-                android:padding="10dp"
-                android:paddingBottom="10dp"
-                android:src="@drawable/ic_row_lo"
-                />
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="5dp"
-                android:text="Salim"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:paddingBottom="10dp"
-                />
-        </LinearLayout>
-    </RelativeLayout>
-  -->
+            >
+            <LinearLayout
+                android:padding="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#ccddff"
+                android:outlineSpotShadowColor="@color/black"
+                >
+
+                <ImageView
+                    android:id="@+id/return_room"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="2dp"
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/ic_row_lo"
+                    />
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:text="Salim"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:paddingBottom="10dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+      -->
     <LinearLayout
         android:id="@+id/chat_bar"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/chat_bar_background">
+        android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/return_room"
 
-                android:padding="5dp"
+            <ImageView
+                android:id="@+id/return_rom"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/row_back_chat"
-                android:layout_width="80dp"
-                android:layout_height="90dp"
+                android:layout_marginStart="0dp"
                 android:clickable="true"
-                />
+                android:padding="5dp"
+                android:src="@drawable/ic_row_lo" />
 
             <TextView
                 android:id="@+id/profile_name"
@@ -75,25 +74,23 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="41dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"
+                android:padding="1dp"
                 android:textColor="@color/white"
                 android:textSize="25dp"
-                android:padding="1dp"
-                android:text="salim"
-                />
+                android:textStyle="bold" />
 
             <ImageView
-
-                android:layout_margin="5dp"
-                android:padding="1dp"
-                android:layout_alignParentEnd="true"
                 android:layout_width="45dp"
-                android:layout_height="45dp"/>
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"
+                android:padding="1dp" />
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="45dp"
                 android:layout_height="55dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginRight="5dp"
                 android:elevation="5dp"
                 android:padding="5dp"
@@ -103,118 +100,95 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/user_presentation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chat_bar"
-        >
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/last_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/last_message_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="750dp"
         android:layout_above="@id/linearLayout"
-        android:layout_below="@id/user_presentation"
+        android:layout_below="@id/chat_bar"
         android:layout_marginTop="50dp"
         android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <LinearLayout
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal"
-        android:weightSum="100">
-<LinearLayout
-    android:id="@+id/messageLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="1"
-    android:background="@drawable/chat_message_background"
-    android:layout_marginRight="8dp"
-    android:layout_marginLeft="8dp">
-        <EditText
-            android:id="@+id/messageBox"
-            android:layout_width="0dp"
+        android:weightSum="100"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/messageLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/chat_message_background"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            android:autofillHints="message"
-            android:hint="@string/type_a_message"
+            <EditText
+                android:id="@+id/messageBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
 
-            android:inputType="text"
+                android:autofillHints="message"
+                android:hint="@string/type_a_message"
 
-            />
+                android:inputType="text"
 
-        <ImageView
-            android:id="@+id/sentButton"
-android:clickable="true"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:contentDescription="@android:string/yes"
-            android:src="@drawable/sent_chat_message" />
-</LinearLayout>
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/send_message_success"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="false"
-            app:lottie_url="https://assets4.lottiefiles.com/packages/lf20_pqnfmone.json" />
+                />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/send_message_error"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="false"
-            app:lottie_url="https://assets2.lottiefiles.com/private_files/lf30_ns1jrplu.json" />
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/send_message_waiting"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_zcfq4d9q.json" />
+            <ImageView
+                android:id="@+id/sentButton"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:contentDescription="@android:string/yes"
+                android:src="@drawable/sent_chat_message" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/send_message_success"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_url="https://assets4.lottiefiles.com/packages/lf20_pqnfmone.json" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/send_message_error"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_url="https://assets2.lottiefiles.com/private_files/lf30_ns1jrplu.json" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/send_message_waiting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_zcfq4d9q.json" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

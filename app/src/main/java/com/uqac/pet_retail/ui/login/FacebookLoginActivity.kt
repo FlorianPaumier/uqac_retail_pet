@@ -1,7 +1,6 @@
 package com.uqac.pet_retail.ui.login
 
-import android.app.Activity
-import android.content.ContentValues
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +12,6 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 import java.util.*
 
@@ -26,63 +21,39 @@ import java.util.*
  */
 class FacebookLoginActivity : LoginActivity() {
 
-    // [START declare_auth]
-    private lateinit var auth: FirebaseAuth
-    // [END declare_auth]
-
     private lateinit var callbackManager: CallbackManager
     private lateinit var buttonFacebookLogin: LoginButton
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_facebook_login)
-        return;
-        // [START initialize_auth]
-        // Initialize Firebase Auth
-        auth = Firebase.auth
-        // [END initialize_auth]
 
-
-        // [START initialize_fblogin]
-        // Initialize Facebook Login button
-        callbackManager = CallbackManager.Factory.create()
-
-        buttonFacebookLogin = findViewById(R.id.fb_login_button)
-
-        callbackManager = CallbackManager.Factory.create()
+        LoginManager.getInstance().logOut()
+        callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"))
-        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<com.facebook.login.LoginResult> {
-            override fun onSuccess(result: com.facebook.login.LoginResult) {
-                Log.d(ContentValues.TAG, "facebook:onSuccess:$result")
-                handleFacebookAccessToken(result.accessToken)
-            }
+        LoginManager.getInstance().registerCallback(callbackManager,
+            object : FacebookCallback<com.facebook.login.LoginResult> {
+                override fun onSuccess(result: com.facebook.login.LoginResult) {
+                    handleFacebookAccessToken(result.accessToken)
+                }
 
-            override fun onCancel() {
-               failLogin("Cancel Login")
-            }
+                override fun onCancel() {
+                    failLogin("Cancel")
+                }
 
-            override fun onError(error: FacebookException) {
-                failLogin(""+error.message)
-            }
-        })
+                override fun onError(error: FacebookException) {
+                    failLogin(error.toString())
+                }
+            })
+
+        findViewById<LoginButton>(R.id.fb_login_button).performClick()
         // [END initialize_fblogin]
     }
 
-    // [START on_start_check_user]
-    public override fun onStart() {
-        super.onStart()
-    }
-
-    public override fun onRestart() {
-        super.onRestart()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
-    // [END on_start_check_user]
-
     // [START on_activity_result]
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // Pass the activity result back to the Facebook SDK
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -93,25 +64,22 @@ class FacebookLoginActivity : LoginActivity() {
         Log.d(TAG, "handleFacebookAccessToken:$token")
 
         val credential = FacebookAuthProvider.getCredential(token.token)
-        auth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
+                    val user = mAuth.currentUser
                     loginSuccess(user)
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.d(ContentValues.TAG, "---------------------")
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Log.d(ContentValues.TAG, "---------------------")
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    failLogin("" + task.exception?.message)
+                    failLogin(task.exception?.message.toString())
                 }
             }
     }
-    // [END auth_with_facebook]
 
     companion object {
         private const val TAG = "FacebookLogin"

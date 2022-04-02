@@ -6,25 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.chat.RoomActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="What is your favourite programming language?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.032" />
+    <LinearLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/places_ic_search"
+            android:layout_width="wrap_content"
+            android:minWidth="50dp"
+            android:layout_height="match_parent"/>
 
-    <AutoCompleteTextView
-        android:id="@+id/user_research"
-        android:layout_width="409dp"
-        android:layout_height="59dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        <AutoCompleteTextView
+            android:id="@+id/user_research"
+            android:layout_width="409dp"
+            android:layout_height="59dp"
+            android:text=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_chat_home"
@@ -57,16 +58,16 @@
 
     <TextView
         android:id="@+id/no_room"
-        app:layout_constraintTop_toBottomOf="@id/user_research"
-        app:layout_constraintStart_toEndOf="@id/user_research"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        app:layout_constraintStart_toEndOf="@id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No Content"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/user_research"
-        app:layout_constraintStart_toEndOf="@id/user_research"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        app:layout_constraintStart_toEndOf="@id/search_container"
         android:id="@+id/room_container"
         android:layout_width="match_parent"
         android:layout_height="606dp"

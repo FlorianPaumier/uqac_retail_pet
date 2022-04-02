@@ -37,8 +37,7 @@ open class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
-    private var mAuth: FirebaseAuth? = null
-    private var fbLoginButton: LoginButton? = null
+    protected lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

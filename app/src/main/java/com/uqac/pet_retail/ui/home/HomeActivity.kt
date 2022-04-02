@@ -7,10 +7,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.FirebaseAuth
 import androidx.cardview.widget.CardView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
@@ -30,8 +33,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val card = findViewById<CardView>(R.id.cardView1)
-        card.setOnClickListener(this)
+        val card = findViewById<CardView>(R.id.card_home_container)
+
+        card?.setOnClickListener(this)
         supportActionBar?.title = "Home";
 
         val auth = Firebase.auth
@@ -50,6 +54,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 //        }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val imageView = findViewById<ImageView>(R.id.card_image)
+        //Glide.with(this).load("https://picsum.photos/200").into(imageView);
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_home, menu)
@@ -74,7 +83,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     fun getProfile(v: View?) {
         when(v?.id){
-            R.id.profile_1 -> {
+            /*R.id.profile_1 -> {
                 goToProfile(1)
             }
             R.id.profile_2 -> {
@@ -85,7 +94,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.profile_4 -> {
                 goToProfile(4)
-            }
+            }*/
         }
     }
 
@@ -117,7 +126,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.cardView1 -> {
+            R.id.card_home_container -> {
                 val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
             }

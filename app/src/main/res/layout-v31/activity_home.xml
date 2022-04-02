@@ -171,10 +171,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="10dp">
 
-                <androidx.cardview.widget.CardView
+
+                <!--androidx.cardview.widget.CardView
                     android:id="@+id/cardView1"
                     android:layout_width="360dp"
                     android:layout_height="130dp"
@@ -190,6 +191,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:layout_marginTop="-50dp"
                             android:id="@+id/imageView1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -400,7 +402,7 @@
                             android:text="Details"
                             android:onClick="getProfile" />
                     </RelativeLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

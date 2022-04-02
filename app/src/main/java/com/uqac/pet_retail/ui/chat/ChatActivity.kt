@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -17,17 +18,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.ChatItemAdapter
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.RoomItemAdapter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseUser
     private lateinit var id: String
+    private lateinit var name: String
+    private lateinit var image: String
     private lateinit var database: DatabaseReference
+    private lateinit var bdd: FirebaseFirestore
     private lateinit var rv: RecyclerView
     var data: ArrayList<FirebaseChatModel> = arrayListOf()
 
@@ -46,11 +53,12 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.return_room).setOnClickListener {
+        findViewById<ImageView>(R.id.return_rom).setOnClickListener {
             val intent = Intent(this, RoomActivity::class.java)
             startActivity(intent)
         }
 
+        bdd = Firebase.firestore
         auth = FirebaseAuth.getInstance().currentUser!!
         database = Firebase.database.reference
 
@@ -73,7 +81,7 @@ class ChatActivity : AppCompatActivity() {
                     findViewById<LottieAnimationView>(R.id.send_message_waiting).visibility =
                         View.GONE
                     findViewById<LottieAnimationView>(R.id.send_message_success).addAnimatorUpdateListener { listner ->
-                        Log.w("Listner","Listner vAlue : " + listner.toString())
+                        Log.w("Listner", "Listner vAlue : " + listner.toString())
                     }
                 }.addOnCanceledListener {
                     findViewById<LottieAnimationView>(R.id.send_message_waiting).visibility =
@@ -81,6 +89,7 @@ class ChatActivity : AppCompatActivity() {
                     findViewById<LottieAnimationView>(R.id.send_message_error).visibility =
                         View.VISIBLE
                 }
+
             Handler(Looper.getMainLooper()).postDelayed({
                 findViewById<LottieAnimationView>(R.id.send_message_error).visibility = View.GONE
                 findViewById<LottieAnimationView>(R.id.send_message_success).visibility = View.GONE
@@ -97,7 +106,36 @@ class ChatActivity : AppCompatActivity() {
         database.child("rooms").child(id)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    Log.e("Data", "onDataChange: " + data.size)
+                    val roomModel = Model()
+
+                    Log.e("z_cp_values", "onDataChange: " + dataSnapshot.value)
+
+                    dataSnapshot.getValue(FirebaseRoomModel::class.java)?.let {
+                        val dataModel: FirebaseRoomModel = it
+                        if (dataModel.user2 == auth.uid || dataModel.user1 == auth.uid) {
+
+                            roomModel.id = dataModel.uid
+                            when {
+                                dataModel.user1 != auth.uid -> {
+                                    bdd.collection("profile").whereEqualTo("user", dataModel.user1)
+                                        .get()
+                                        .addOnSuccessListener { documents ->
+                                            val profile = documents.first()
+                                            findViewById<TextView>(R.id.profile_name).text = profile.get("name").toString()
+                                        }
+                                }
+                                dataModel.user2 != auth.uid -> {
+                                    bdd.collection("profile").whereEqualTo("user", dataModel.user2)
+                                        .get()
+                                        .addOnSuccessListener { documents ->
+                                            val profile = documents.first()
+                                            findViewById<TextView>(R.id.profile_name).text = profile.get("name").toString()
+                                        }
+                                }
+                                else -> {}
+                            }
+                        }
+                    }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -112,17 +150,20 @@ class ChatActivity : AppCompatActivity() {
                     snapshot.getValue(FirebaseChatModel::class.java)?.let {
                         val dataModel: FirebaseChatModel = it
 
+
+
                         if (dataModel.author == auth.uid) {
                             dataModel.isUser = true
-                        }else {
+                        } else {
                             dataModel.read = true
-                            database.child("rooms/$id/messages/").child(dataModel.uid).setValue(dataModel)
+                            Log.w("Read", dataModel.read.toString())
+                            database.child("rooms/$id/messages/").child(dataModel.uid)
+                                .setValue(dataModel)
                         }
+                        Log.w("Author", dataModel.isUser.toString())
                         data.add(dataModel)
                     }
                     rv.getAdapter()?.notifyDataSetChanged()
-
-                    Log.e("Data", "onDataChange: " + data.size)
                 }
 
                 override fun onChildChanged(
@@ -137,8 +178,8 @@ class ChatActivity : AppCompatActivity() {
                         if (dataModel.author == auth.uid) {
                             dataModel.isUser = true
                         }
-                        for (i in 0 until data.size){
-                            if (data[i].uid == dataSnapshot.key){
+                        for (i in 0 until data.size) {
+                            if (data[i].uid == dataSnapshot.key) {
                                 data.set(i, dataModel)
                                 break;
                             }
@@ -161,11 +202,11 @@ class ChatActivity : AppCompatActivity() {
     override fun onStart() {
         Log.w("Step", "Just Start")
         super.onStart()
-        for (item in data){
+        for (item in data) {
             Log.w("Item", item.uid)
-            if (!item.read){
+            if (!item.read) {
                 item.read = true
-                database.child("rooms/$id/messages/"+item.uid).setValue(item)
+                database.child("rooms/$id/messages/" + item.uid).setValue(item)
             }
         }
     }
@@ -173,16 +214,16 @@ class ChatActivity : AppCompatActivity() {
     override fun onResume() {
         Log.w("Step", "Just Resume")
         super.onResume()
-        for (item in data){
+        for (item in data) {
             Log.w("Item", item.uid)
-            if (!item.read){
+            if (!item.read) {
                 item.read = true
-                database.child("rooms/$id/messages/"+item.uid).setValue(item)
+                database.child("rooms/$id/messages/" + item.uid).setValue(item)
             }
         }
     }
 
-private fun generateItems(dataSnapshot: DataSnapshot) {
+    private fun generateItems(dataSnapshot: DataSnapshot) {
         for (snapshot in dataSnapshot.children) {
             snapshot.getValue(FirebaseChatModel::class.java)?.let {
                 val dataModel: FirebaseChatModel = it

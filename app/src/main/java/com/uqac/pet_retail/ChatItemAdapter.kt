@@ -2,13 +2,12 @@ package com.uqac.pet_retail
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uqac.pet_retail.ui.chat.ChatActivity
@@ -27,13 +26,23 @@ class ChatItemAdapter(context: Context, data: ArrayList<FirebaseChatModel>) :
         return ViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mData[position]
         holder.uid.text = item.uid
         holder.message.text = item.message
         holder.date.text = item.date
         holder.read.isChecked = item.read
+        holder.messageOther.text = item.message
+        holder.dateOther.text = item.date
+        holder.readOther.isChecked = item.read
         holder.isUser.isChecked = item.isUser
+
+        if (item.isUser){
+            holder.userMessage.visibility = View.VISIBLE
+        }else{
+            holder.otherMessage.visibility = View.VISIBLE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -43,30 +52,31 @@ class ChatItemAdapter(context: Context, data: ArrayList<FirebaseChatModel>) :
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         var message: TextView
-        var uid: TextView = itemView.findViewById(R.id.message_id)
         var date: TextView
         var read: CheckBox
-        var isUser: CheckBox = itemView.findViewById(R.id.is_user)
-
-        override fun onClick(view: View) {
-            val intent = Intent(context, ChatActivity::class.java)
-            intent.putExtra("id", uid.text.toString())
-            context.startActivity(intent)
-        }
+        var messageOther: TextView
+        var dateOther: TextView
+        var readOther: CheckBox
+        var isUser: CheckBox
+        var uid: TextView
+        var otherMessage: RelativeLayout
+        var userMessage: ConstraintLayout
 
         init {
-            if (isUser.isChecked){
-                itemView.findViewById<LinearLayout>(R.id.message_user_container).visibility = View.VISIBLE
-                message = itemView.findViewById(R.id.message_user)
-                date = itemView.findViewById(R.id.message_user_date)
-                read = itemView.findViewById(R.id.message_user_read)
-            }else{
-                itemView.findViewById<LinearLayout>(R.id.message_other_container).visibility = View.VISIBLE
-                message = itemView.findViewById(R.id.message_other)
-                date = itemView.findViewById(R.id.message_other_date)
-                read = itemView.findViewById(R.id.message_other_read)
-            }
-            itemView.setOnClickListener(this)
+            uid = itemView.findViewById(R.id.message_id)
+            otherMessage = itemView.findViewById(R.id.message_other_container)
+            userMessage = itemView.findViewById(R.id.message_user_container)
+            isUser = itemView.findViewById(R.id.is_user)
+            message = itemView.findViewById(R.id.message_user)
+            date = itemView.findViewById(R.id.message_user_date)
+            read = itemView.findViewById(R.id.message_user_read)
+            messageOther = itemView.findViewById(R.id.message_other)
+            dateOther = itemView.findViewById(R.id.message_other_date)
+            readOther = itemView.findViewById(R.id.message_other_read)
+        }
+
+        override fun onClick(p0: View?) {
+            TODO("Not yet implemented")
         }
     }
 

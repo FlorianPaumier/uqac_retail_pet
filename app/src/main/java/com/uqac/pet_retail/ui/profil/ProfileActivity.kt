@@ -2,10 +2,12 @@ package com.uqac.pet_retail.ui.profil
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,10 @@ class ProfileActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         bdd = Firebase.firestore.collection("profile")
 
+        findViewById<Button>(R.id.new_annonce).setOnClickListener({
+            val intent = Intent(this, AnnonceActivity::class.java)
+            startActivity(intent)
+        })
         bdd.whereEqualTo("user", user?.uid)
             .get()
             .addOnSuccessListener { documents ->

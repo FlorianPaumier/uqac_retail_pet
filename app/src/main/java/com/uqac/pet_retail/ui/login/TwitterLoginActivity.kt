@@ -20,7 +20,6 @@ import com.uqac.pet_retail.ui.home.HomeActivity
 
 class TwitterLoginActivity : LoginActivity() {
 
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var btnTwitter: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
