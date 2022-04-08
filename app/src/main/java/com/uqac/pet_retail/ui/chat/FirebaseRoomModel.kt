@@ -1,6 +1,8 @@
 package com.uqac.pet_retail.ui.chat
 
 class FirebaseRoomModel {
+    var user1Name: String = ""
+    var user2Name: String = ""
     var uid: String = ""
     var user1: String = ""
     var user2: String = ""

@@ -93,7 +93,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
 
         var users: ArrayList<String> = ArrayList()
 
-        for (room in data){
+        for (room in data) {
             users.add(room.name)
         }
 
@@ -105,6 +105,7 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
         val textView = findViewById<AutoCompleteTextView>(R.id.user_research)
         textView?.setAdapter(adapter)
     }
+
     private fun generateItems(dataSnapshot: DataSnapshot) {
         for (snapshot in dataSnapshot.children) {
             val roomModel = Model()
@@ -118,30 +119,23 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
                     roomModel.id = dataModel.uid
                     when {
                         dataModel.user1 != auth.uid -> {
-                            bdd.collection("profile").whereEqualTo("user", dataModel.user1).get()
-                                .addOnSuccessListener { documents ->
-                                    val profile = documents.first()
-                                    roomModel.name = profile.get("name").toString()
-                                }
+                            roomModel.name = dataModel.user1Name
                         }
                         dataModel.user2 != auth.uid -> {
-                            bdd.collection("profile").whereEqualTo("user", dataModel.user2).get()
-                                .addOnSuccessListener { documents ->
-                                    val profile = documents.first()
-                                    roomModel.name = profile.get("name").toString()
-                                }
+                            roomModel.name = dataModel.user2Name
                         }
                     }
 
                     if (dataModel.messages.isNotEmpty()) {
                         val lastMessage = dataModel.messages.values.first()
-                        roomModel.lastMessage = lastMessage.get("message").toString()
-                        roomModel.lastMessageDate = lastMessage.get("date").toString()
+                        roomModel.lastMessage =
+                            lastMessage.get("message").toString()
+                        roomModel.lastMessageDate =
+                            lastMessage.get("date").toString()
                     } else {
                         roomModel.lastMessage = "No message"
                         roomModel.lastMessageDate = "None"
                     }
-
                     data.add(roomModel)
                 }
             }
@@ -154,32 +148,24 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button_new_room -> {
                 val email = findViewById<AutoCompleteTextView>(R.id.user_research).text.toString()
 
-                val messages: ArrayList<HashMap<String, Any>> = ArrayList()
+                val messages: HashMap<String, HashMap<String, Any>> = HashMap()
 
-                messages.add(
-                    hashMapOf(
-                        "message" to "Hello",
-                        "date" to "2022-01-01 09:00:00",
-                        "read" to false,
-                        "author" to ""
-                    )
-                )
-
-                val room = hashMapOf(
-                    "uid" to "",
-                    "user1" to users.get(email),
-                    "user2" to auth.uid,
-                    "messages" to messages
-                )
+                var room: FirebaseRoomModel = FirebaseRoomModel()
+                room.messages = messages
+                room.uid = ""
+                room.user1 = users.get(email)!!
+                room.user2 = auth.uid
+                room.user2Name = auth.uid
+                room.user1Name = auth.uid
 
                 val key = database.database.reference.child("rooms").push().key
-                room["uid"] = key
+                room.uid = key!!
 
-                database.child("rooms/$key").setValue(room)
+                //database.child("rooms/$key").setValue(room)
 
-                val intent = Intent(this, ChatActivity::class.java)
-                intent.putExtra("id", key);
-                startActivity(intent)
+                //val intent = Intent(this, ChatActivity::class.java)
+                //intent.putExtra("id", key);
+                //startActivity(intent)
             }
         }
     }

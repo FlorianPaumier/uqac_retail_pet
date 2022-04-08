@@ -45,17 +45,15 @@
             </LinearLayout>
         </RelativeLayout>
       -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chat_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <ImageView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/return_rom"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -66,20 +64,25 @@
                 android:src="@drawable/ic_row_lo" />
 
             <TextView
+                app:layout_constraintEnd_toStartOf="@id/profile_picture"
+                app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/profile_name"
-                android:layout_width="95dp"
+                android:layout_width="wrap_content"
+                android:maxWidth="200dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="41dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
                 android:padding="1dp"
                 android:textColor="@color/black"
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/profile_picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
@@ -89,6 +92,8 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="45dp"
                 android:layout_height="55dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="5dp"
@@ -97,9 +102,8 @@
                 android:src="@drawable/slider"
                 app:shapeAppearanceOverlay="@style/Circular" />
 
-        </RelativeLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_list"

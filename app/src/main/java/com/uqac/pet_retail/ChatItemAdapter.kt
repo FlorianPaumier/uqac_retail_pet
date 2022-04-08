@@ -38,10 +38,13 @@ class ChatItemAdapter(context: Context, data: ArrayList<FirebaseChatModel>) :
         holder.readOther.isChecked = item.read
         holder.isUser.isChecked = item.isUser
 
+        Log.w("Is User", item.isUser.toString())
         if (item.isUser){
             holder.userMessage.visibility = View.VISIBLE
+            holder.otherMessage.visibility = View.GONE
         }else{
             holder.otherMessage.visibility = View.VISIBLE
+            holder.userMessage.visibility = View.GONE
         }
     }
 
@@ -60,7 +63,7 @@ class ChatItemAdapter(context: Context, data: ArrayList<FirebaseChatModel>) :
         var isUser: CheckBox
         var uid: TextView
         var otherMessage: RelativeLayout
-        var userMessage: ConstraintLayout
+        var userMessage: RelativeLayout
 
         init {
             uid = itemView.findViewById(R.id.message_id)

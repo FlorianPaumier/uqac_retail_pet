@@ -24,6 +24,9 @@ import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.ChatItemAdapter
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.RoomItemAdapter
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -58,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         bdd = Firebase.firestore
         auth = FirebaseAuth.getInstance().currentUser!!
         database = Firebase.database.reference
@@ -68,10 +72,17 @@ class ChatActivity : AppCompatActivity() {
 
             val key = database.child("rooms").child(id).child("messages").push().key
 
+            val current = LocalDateTime.now()
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val formatted = current.format(formatter)
+
+
+            Log.w("Date", formatted)
             val message = hashMapOf(
                 "uid" to key,
                 "message" to findViewById<EditText>(R.id.messageBox).text.toString(),
-                "date" to Date().toString(),
+                "date" to formatted,
                 "author" to auth.uid,
                 "read" to false
             )
@@ -95,6 +106,7 @@ class ChatActivity : AppCompatActivity() {
                 findViewById<LottieAnimationView>(R.id.send_message_success).visibility = View.GONE
                 findViewById<ImageView>(R.id.sentButton).visibility = View.VISIBLE
                 findViewById<EditText>(R.id.messageBox).text.clear()
+                findViewById<EditText>(R.id.messageBox).clearFocus()
             }, 1000)
 
         }
@@ -117,20 +129,10 @@ class ChatActivity : AppCompatActivity() {
                             roomModel.id = dataModel.uid
                             when {
                                 dataModel.user1 != auth.uid -> {
-                                    bdd.collection("profile").whereEqualTo("user", dataModel.user1)
-                                        .get()
-                                        .addOnSuccessListener { documents ->
-                                            val profile = documents.first()
-                                            findViewById<TextView>(R.id.profile_name).text = profile.get("name").toString()
-                                        }
+                                    findViewById<TextView>(R.id.profile_name).text = dataModel.user1Name
                                 }
                                 dataModel.user2 != auth.uid -> {
-                                    bdd.collection("profile").whereEqualTo("user", dataModel.user2)
-                                        .get()
-                                        .addOnSuccessListener { documents ->
-                                            val profile = documents.first()
-                                            findViewById<TextView>(R.id.profile_name).text = profile.get("name").toString()
-                                        }
+                                    findViewById<TextView>(R.id.profile_name).text = dataModel.user2Name
                                 }
                                 else -> {}
                             }
@@ -143,14 +145,12 @@ class ChatActivity : AppCompatActivity() {
                 }
             })
 
-        database.child("rooms").child("$id/messages").orderByChild("date")
+        database.child("rooms").child("$id/messages")
             .addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     Log.w("Value", snapshot.value.toString())
                     snapshot.getValue(FirebaseChatModel::class.java)?.let {
                         val dataModel: FirebaseChatModel = it
-
-
 
                         if (dataModel.author == auth.uid) {
                             dataModel.isUser = true
@@ -162,6 +162,7 @@ class ChatActivity : AppCompatActivity() {
                         }
                         Log.w("Author", dataModel.isUser.toString())
                         data.add(dataModel)
+                        rv.scrollToPosition(data.size - 1)
                     }
                     rv.getAdapter()?.notifyDataSetChanged()
                 }
@@ -184,6 +185,7 @@ class ChatActivity : AppCompatActivity() {
                                 break;
                             }
                         }
+                        rv.scrollToPosition(data.size - 1)
                     }
                 }
 
