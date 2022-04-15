@@ -39,7 +39,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_annonce)
+        setContentView(R.layout.activity_annonce1)
         binding = ActivityAnnonceBinding.inflate(layoutInflater)
 
         val btnValidation = findViewById<Button>(R.id.valid_annonce)

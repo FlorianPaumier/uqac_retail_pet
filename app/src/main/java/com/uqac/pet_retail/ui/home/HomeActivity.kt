@@ -20,6 +20,7 @@ import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityHomeBinding
 import com.uqac.pet_retail.ui.chat.RoomActivity
 import com.uqac.pet_retail.ui.login.LoginActivity
+import com.uqac.pet_retail.ui.profil.AnnonceActivity
 import com.uqac.pet_retail.ui.profil.ProfileActivity
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
@@ -65,6 +66,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
+    private fun goToAnnonce() {
+        val intent = Intent(this, AnnonceActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
@@ -75,6 +81,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             R.id.logout -> {
                 FirebaseAuth.getInstance().signOut()
                 logout()
+                true
+            }
+            R.id.annonce -> {
+                goToAnnonce()
                 true
             }
             else -> super.onOptionsItemSelected(item)
