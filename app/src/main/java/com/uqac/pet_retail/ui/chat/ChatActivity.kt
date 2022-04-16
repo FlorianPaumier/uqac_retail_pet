@@ -77,7 +77,6 @@ class ChatActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = current.format(formatter)
 
-
             Log.w("Date", formatted)
             val message = hashMapOf(
                 "uid" to key,

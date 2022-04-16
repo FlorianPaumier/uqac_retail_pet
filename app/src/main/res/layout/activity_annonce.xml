@@ -1,209 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
     tools:context=".ui.profil.AnnonceActivity">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
+        android:layout_height="wrap_content">
 
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/pet_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+        <TextView
+            android:id="@+id/titre_annonce"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:text="Publier une annonce"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/pet_info_supp"
+            android:id="@+id/name_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="65dp"
             android:orientation="vertical"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titre_annonce">
+
+            <TextView
+                android:id="@+id/titre_nom_animal"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:text="Nom de l'animal"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/address"
-                style="@null"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:id="@+id/pet_name"
+                android:layout_width="384dp"
+                android:layout_height="38dp"
                 android:background="@android:color/transparent"
-                android:hint="Address"
+                android:hint="Name"
                 android:importantForAutofill="no" />
+        </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/Name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginTop="125dp"
-                android:background="@drawable/input_text"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/type_animal_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_container">
 
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/titre_type_animal"
+                android:layout_width="199dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25sp"
+                android:text="Type"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/type_animal"
+                android:autofillHints="name"
+                android:layout_width="139dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="25sp"
+                android:layout_weight="1"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/race_animal_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type_animal_container">
+
+            <TextView
+                android:id="@+id/titre_race_animal"
+                android:layout_width="199dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25sp"
+                android:text="Race"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/race_animal"
+                android:layout_width="139dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="25sp"
+                android:layout_weight="1"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/period_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/race_animal_container">
+
+            <TextView
+                android:id="@+id/titre_periode_garde"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="Période de la garde"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="150dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Type" />
-
-                    <Spinner
-                        android:id="@+id/pet_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/btn_dropdown"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/type_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/input_text"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp">
-
-                    <EditText
-                        android:id="@+id/pet_race"
-                        style="@null"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:background="@android:color/transparent"
-                        android:hint="Race"
-                        android:importantForAutofill="no" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/address_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/input_text"
-                        app:boxCornerRadiusBottomEnd="8dp"
-                        app:boxCornerRadiusBottomStart="8dp"
-                        app:boxCornerRadiusTopEnd="8dp"
-                        app:boxCornerRadiusTopStart="8dp">
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/city_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/input_text"
-                        app:boxCornerRadiusBottomEnd="8dp"
-                        app:boxCornerRadiusBottomStart="8dp"
-                        app:boxCornerRadiusTopEnd="8dp"
-                        app:boxCornerRadiusTopStart="8dp">
-
-                        <EditText
-                            android:id="@+id/city"
-                            style="@null"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="@android:color/transparent"
-                            android:hint="City"
-                            android:importantForAutofill="no" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/zipCode_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/input_text"
-                        app:boxCornerRadiusBottomEnd="8dp"
-                        app:boxCornerRadiusBottomStart="8dp"
-                        app:boxCornerRadiusTopEnd="8dp"
-                        app:boxCornerRadiusTopStart="8dp">
-
-                        <EditText
-                            android:id="@+id/zipCode"
-                            style="@null"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="@android:color/transparent"
-                            android:hint="ZipCode"
-                            android:importantForAutofill="no" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/country_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/input_text"
-                        app:boxCornerRadiusBottomEnd="8dp"
-                        app:boxCornerRadiusBottomStart="8dp"
-                        app:boxCornerRadiusTopEnd="8dp"
-                        app:boxCornerRadiusTopStart="8dp">
-
-                        <EditText
-                            android:id="@+id/country"
-                            style="@null"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="@android:color/transparent"
-                            android:hint="Country"
-                            android:importantForAutofill="no" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -211,105 +127,137 @@
                     android:id="@+id/pet_time_morning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="Morning Time"
-                    tools:layout_editor_absoluteX="67dp"
-                    tools:layout_editor_absoluteY="409dp" />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
                     android:id="@+id/pet_time_afternoon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="Afternoon time"
-                    tools:layout_editor_absoluteX="130dp"
-                    tools:layout_editor_absoluteY="412dp" />
+                    app:layout_constraintLeft_toRightOf="@id/pet_time_morning"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
                     android:id="@+id/pet_time_night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="night time"
-                    tools:layout_editor_absoluteX="134dp"
-                    tools:layout_editor_absoluteY="456dp" />
-            </LinearLayout>
+                    app:layout_constraintLeft_toRightOf="@id/pet_time_afternoon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <TextView
+                <CheckBox
+                    android:id="@+id/pet_time_week"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description" />
+                    android:checked="false"
+                    android:text="Week time"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pet_time_morning" />
 
-                <EditText
-                    android:id="@+id/pet_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:ems="100"
-                    android:gravity="start|top"
-                    android:inputType="text|textMultiLine"
-                    android:text="Hello"
-                    app:layout_constraintTop_toBottomOf="@id/pet_time_night"
-                    tools:layout_editor_absoluteX="82dp"
-                    tools:layout_editor_absoluteY="595dp" />
-
-                <EditText
-                    android:id="@+id/pet_name"
-                    style="@null"
-                    android:layout_width="384dp"
-                    android:layout_height="38dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:hint="Name"
-                    android:importantForAutofill="no" />
-            </LinearLayout>
-
+                <CheckBox
+                    android:id="@+id/pet_time_weekend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="weekend time"
+                    app:layout_constraintLeft_toRightOf="@id/pet_time_week"
+                    app:layout_constraintTop_toBottomOf="@id/pet_time_afternoon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/add_pictures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="add pictures"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pet_info_supp" />
-
-        <ImageSwitcher
-            android:id="@+id/pet_pictures"
+        <LinearLayout
+            android:id="@+id/description_container"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toBottomOf="@id/add_pictures" />
-
-        <Button
-            android:id="@+id/prev_picture"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="prev"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/period_container">
 
-        <Button
-            android:id="@+id/next_picture"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/titre_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="166dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:hint="Ajoutez une description ou des instructions" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/picture_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="next"
-            app:layout_constraintLeft_toRightOf="@id/prev_picture"
-            app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_container">
 
+            <Button
+                android:id="@+id/add_pictures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add pictures"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageSwitcher
+                android:id="@+id/pet_pictures"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@id/add_pictures" />
+
+            <Button
+                android:id="@+id/prev_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prev"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+
+            <Button
+                android:id="@+id/next_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="next"
+                app:layout_constraintLeft_toRightOf="@id/prev_picture"
+                app:layout_constraintTop_toBottomOf="@id/pet_pictures" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/valid_annonce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintTop_toBottomOf="@id/next_picture"
+            android:text="Validation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picture_container"
             tools:layout_editor_absoluteX="59dp"
             tools:layout_editor_absoluteY="683dp" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/delete_annonce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"
+            android:text="Delete"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/valid_annonce"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="683dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
