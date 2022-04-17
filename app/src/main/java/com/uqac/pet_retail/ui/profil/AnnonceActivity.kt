@@ -3,21 +3,21 @@ package com.uqac.pet_retail.ui.profil
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import bolts.Task
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -26,11 +26,16 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.databinding.ActivityAnnonceBinding
-import java.lang.Exception
+import java.io.BufferedInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.net.URL
+import java.net.URLConnection
 
 
 class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.OnItemSelectedListener {
     private var annonce_uid: String? = null
+    private lateinit var annonce: AnnonceModel
     private var uid: String? = null
     private lateinit var profile: ProfileModel
     private lateinit var ref: StorageReference
@@ -45,6 +50,8 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
     private var currentIndex = 0
     var items: ArrayList<String> = ArrayList<String>()
     var typeAnimal: String? = ""
+    var uploadPicture: ArrayList<Uri> = ArrayList()
+    lateinit var rv: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +60,11 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
 
         db = Firebase.firestore
         storage = Firebase.storage("gs://pet-retail.appspot.com")
-        ref = storage.reference.child("annonce")
+        ref = storage.reference
 
         val btnValidation = findViewById<Button>(R.id.valid_annonce)
 
-        imageView = findViewById(R.id.pet_pictures)
+        imageView = findViewById<ImageSwitcher>(R.id.pet_pictures)
         val btnPictures = findViewById<Button>(R.id.add_pictures)
         val previous = findViewById<Button>(R.id.prev_picture)
         val next = findViewById<Button>(R.id.next_picture)
@@ -158,13 +165,23 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         type.adapter = adapter
         type.onItemSelectedListener = this
         type.setSelection(0)
+
+
+        rv = findViewById<RecyclerView>(R.id.upload_picture)
+        val annonceAdapter = AnnonceImageItemAdapter(this, uploadPicture)
+        rv.adapter = annonceAdapter
+        rv.setHasFixedSize(true);
+        val llm = LinearLayoutManager(this)
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rv.setLayoutManager(llm);
+
         if (annonce_uid != null) {
             val docRef = db.collection("annonce").document(annonce_uid!!)
             docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                        val annonce = document.toObject<AnnonceModel>()!!
+                        annonce = document.toObject<AnnonceModel>()!!
                         name.setText(annonce.name)
                         race.setText(annonce.race)
                         description.setText(annonce.description)
@@ -174,6 +191,16 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
                         week.isChecked = annonce.weekTime
                         weekend.isChecked = annonce.weekendTime
                         type.setSelection(items.indexOf(annonce.type))
+
+                        for (file in annonce.picture){
+                            val download = ref.child(file!!)
+                            download.downloadUrl.addOnSuccessListener {
+                                uploadPicture.add(it)
+                                rv.getAdapter()?.notifyDataSetChanged()
+                            }.addOnFailureListener {
+                                Log.w("Download", it.toString())
+                            }
+                        }
                     } else {
                         Log.d(TAG, "No such document")
                     }
@@ -203,33 +230,31 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
 
         val picturesId = ArrayList<String?>()
 
-        for (i in 0 until pictures.count()) {
-            if (pictures[i] !== null) {
-                val uri: Uri = pictures[i]!!
-                val uploadTask = ref.putFile(uri)
+        for (file in pictures){
+            if (file !== null) {
+                val riversRef = ref.child("images/annonces").child("${file.lastPathSegment}")
+                val uploadTask = riversRef.putFile(file)
+                picturesId.add("images/annonces/${file.lastPathSegment}")
 
-                val urlTask = uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                        }
-                    }
-                    ref.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        picturesId.add(task.result.path)
-                    } else {
-                        Toast.makeText(this, "Erreur Upload", Toast.LENGTH_SHORT).show()
-                    }
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener {
+                    Log.w("File", it.toString())
+                    Toast.makeText(this, "Erreur Upload", Toast.LENGTH_SHORT).show()
+                }.addOnSuccessListener { taskSnapshot ->
+                    Toast.makeText(this, "Upload Success", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
 
         if (picturesId.count() != pictures.count()) {
             return;
         }
 
-        val annonce = AnnonceModel()
+        if (annonce == null){
+            annonce = AnnonceModel()
+        }
+
         annonce.name = petName
         annonce.type = typeAnimal!!
         annonce.race = petRace
@@ -313,27 +338,6 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         }
     }
 
-    private fun previousImage() {
-        if (currentIndex > 0) {
-            currentIndex--
-        } else {
-            Toast.makeText(applicationContext, "No Previous Image", Toast.LENGTH_SHORT).show()
-            return
-        }
-        showImage(currentIndex)
-    }
-
-    private fun nextImage() {
-        if (currentIndex < this.pictures.count() - 1) {
-            currentIndex++
-        } else {
-            Toast.makeText(applicationContext, "No Next Image", Toast.LENGTH_SHORT).show()
-            return
-        }
-        showImage(currentIndex)
-    }
-
-
     private fun showImage(imgIndex: Int) {
         val imageName: Uri = this.pictures.get(imgIndex)
         val resId = getDrawableResIdByName(imageName.toString())
@@ -358,5 +362,31 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
+    }
+
+    private fun getImageBitmap(url: String): Bitmap? {
+        var bm: Bitmap? = null
+        try {
+            val aURL = URL(url)
+            val conn: URLConnection = aURL.openConnection()
+            conn.connect()
+            val `is`: InputStream = conn.getInputStream()
+            val bis = BufferedInputStream(`is`)
+            bm = BitmapFactory.decodeStream(bis)
+            bis.close()
+            `is`.close()
+        } catch (e: IOException) {
+            Log.e(TAG, "Error getting bitmap", e)
+        }
+        return bm
+    }
+
+    public fun deletePicture(uri: Uri){
+        if(annonce.picture.contains(uri.lastPathSegment)){
+            annonce.picture.remove(uri.lastPathSegment)
+            ref.child(uri.lastPathSegment!!).delete()
+            uploadPicture.remove(uri)
+            rv.getAdapter()?.notifyDataSetChanged()
+        }
     }
 }
