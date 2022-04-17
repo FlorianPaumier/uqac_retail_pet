@@ -17,15 +17,17 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 import com.uqac.pet_retail.RoomItemAdapter
 import com.uqac.pet_retail.databinding.ActivityRoomBinding
+import com.uqac.pet_retail.ui.profil.AnnonceModel
 import org.json.JSONArray
 import org.json.JSONObject
 
 
-class RoomActivity : AppCompatActivity(), View.OnClickListener {
+class RoomActivity : AppCompatActivity() {
 
     private lateinit var rv: RecyclerView
     private lateinit var users: java.util.HashMap<String, String>
@@ -41,69 +43,38 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val button = findViewById<Button>(R.id.button_new_room)
-        button?.setOnClickListener(this)
         database = Firebase.database.reference
 
         bdd = Firebase.firestore
         auth = FirebaseAuth.getInstance().currentUser!!
 
-        users = HashMap<String, String>()
-
         rv = findViewById<RecyclerView>(R.id.room_container)
         val roomAdapter = RoomItemAdapter(this, data)
         rv.adapter = roomAdapter
-        database.child("rooms").orderByChild("user1").equalTo(auth.uid)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    findViewById<View>(R.id.animationView).visibility = View.GONE
 
-                    generateItems(dataSnapshot)
+        bdd.collection("rooms").document(auth.uid)
+            .get().addOnSuccessListener {
+            result ->
+            val rooms = result.toObject<UserRoomsModel>()!!
+            Log.w("Rooms", rooms.toString())
+            for (room in rooms.rooms){
+                database.child("rooms").orderByKey().equalTo(room)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            findViewById<View>(R.id.animationView).visibility = View.GONE
 
-                    Log.e("Data", "onDataChange: " + data.size)
-                }
+                            generateItems(dataSnapshot)
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("The read failed: " + databaseError.code)
-                }
-            })
+                            Log.e("Data", "onDataChange: " + data.size)
+                        }
 
-        database.child("rooms").orderByChild("user2").equalTo(auth.uid)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    findViewById<View>(R.id.animationView).visibility = View.GONE
-
-                    generateItems(dataSnapshot)
-
-                    Log.e("Data", "onDataChange: " + data.size)
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("The read failed: " + databaseError.code)
-                }
-            })
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        var users: ArrayList<String> = ArrayList()
-
-        for (room in data) {
-            users.add(room.name)
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            println("The read failed: " + databaseError.code)
+                        }
+                    })
+            }
         }
 
-        var adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            this,
-            android.R.layout.select_dialog_item, users
-        )
-
-        val textView = findViewById<AutoCompleteTextView>(R.id.user_research)
-        textView?.setAdapter(adapter)
     }
 
     private fun generateItems(dataSnapshot: DataSnapshot) {
@@ -140,33 +111,6 @@ class RoomActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             rv.getAdapter()?.notifyDataSetChanged()
-        }
-    }
-
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
-            R.id.button_new_room -> {
-                val email = findViewById<AutoCompleteTextView>(R.id.user_research).text.toString()
-
-                val messages: HashMap<String, HashMap<String, Any>> = HashMap()
-
-                var room: FirebaseRoomModel = FirebaseRoomModel()
-                room.messages = messages
-                room.uid = ""
-                room.user1 = users.get(email)!!
-                room.user2 = auth.uid
-                room.user2Name = auth.uid
-                room.user1Name = auth.uid
-
-                val key = database.database.reference.child("rooms").push().key
-                room.uid = key!!
-
-                //database.child("rooms/$key").setValue(room)
-
-                //val intent = Intent(this, ChatActivity::class.java)
-                //intent.putExtra("id", key);
-                //startActivity(intent)
-            }
         }
     }
 }

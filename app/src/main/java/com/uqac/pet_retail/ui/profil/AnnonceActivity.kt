@@ -59,8 +59,8 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
 
         imageView = findViewById(R.id.pet_pictures)
         val btnPictures = findViewById<Button>(R.id.add_pictures)
-        val previous = binding.prevPicture
-        val next = binding.nextPicture
+        val previous = findViewById<Button>(R.id.prev_picture)
+        val next = findViewById<Button>(R.id.next_picture)
         val name = findViewById<EditText>(R.id.pet_name)
         val race = findViewById<EditText>(R.id.race_animal)
         val type = findViewById<Spinner>(R.id.type_animal)
@@ -105,7 +105,6 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         imageView.setFactory {
             val imageView = ImageView(applicationContext)
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-
             // returning imageview
             imageView
         }
@@ -131,6 +130,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
             imageView.setInAnimation(this, R.anim.from_left);
             imageView.setOutAnimation(this, R.anim.to_right);
             currentIndex++;
+            Log.w("Position", currentIndex.toString())
             // condition
             if (currentIndex == pictures.count())
                 currentIndex = 0;
@@ -148,7 +148,6 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
             if (currentIndex < 0)
                 currentIndex = pictures.count() - 1;
             imageView.setImageURI(pictures.get(currentIndex));
-
         }
 
         btnPictures.setOnClickListener(this)
