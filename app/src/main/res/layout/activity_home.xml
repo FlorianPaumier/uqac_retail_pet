@@ -170,7 +170,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/card_home_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/activity_annonce_list"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
         </LinearLayout>
     </ScrollView>
 
