@@ -1,40 +1,34 @@
-package com.uqac.pet_retail.ui.home
+package com.uqac.pet_retail.ui.base
 
-import android.content.ContentValues.TAG
-import android.content.Intent
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.ui.AppBarConfiguration
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
-import com.uqac.pet_retail.databinding.ActivityHomeBinding
-import com.uqac.pet_retail.ui.profil.ProfileActivity
 
 
-class HomeActivity : AppCompatActivity(), View.OnClickListener {
-
-    private lateinit var binding: ActivityHomeBinding
+class BaseActivity : AppCompatActivity() {
+    protected var txtHeading: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+//        binding = ActivityHomeBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
 
         val card = findViewById<CardView>(R.id.card_home_container)
 
-        card?.setOnClickListener(this)
         supportActionBar?.title = "Home"
 
         val auth = Firebase.auth
@@ -49,14 +43,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-        Log.w(TAG, ""+user?.uid)
+        Log.w(ContentValues.TAG, ""+user?.uid)
     }
 
-    override fun onStart() {
-        super.onStart()
-        val imageView = findViewById<ImageView>(R.id.card_image)
-        //Glide.with(this).load("https://picsum.photos/200").into(imageView);
-    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_home, menu)
@@ -94,30 +83,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
-
-    fun getProfile(v: View?) {
-        when(v?.id){
-            /*R.id.profile_1 -> {
-                goToProfile(1)
-            }
-            R.id.profile_2 -> {
-                goToProfile(2)
-            }
-            R.id.profile_3 -> {
-                goToProfile(3)
-            }
-            R.id.profile_4 -> {
-                goToProfile(4)
-            }*/
-        }
-    }
-
-    override fun onClick(p0: View?) {
-        when(p0?.id){
-            R.id.card_home_container -> {
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
-            }
-        }
+    protected fun setHeading(resId: Int) {
+//        if (tv_title == null) txtHeading = findViewById(R.id.tv_title)
+//        if (tv_title != null) txtHeading!!.setText(resId)
     }
 }

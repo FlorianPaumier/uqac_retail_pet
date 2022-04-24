@@ -53,4 +53,5 @@
     <string name="fb_login_protocol_scheme">fb487533726350076</string>
     <string name="google_login_id">967979226316-bb7c9t4dt67i2lfi13ee006tfdahg2mf.apps.googleusercontent.com</string>
     <string name="google_login_id_web">AIzaSyCirGtJK7uUEsPwws4a9160K9dyCzEkE3A</string>
+    <string name="menu">Menu</string>
 </resources>
