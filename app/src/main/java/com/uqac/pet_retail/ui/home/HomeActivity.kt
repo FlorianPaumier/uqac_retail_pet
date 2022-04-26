@@ -62,7 +62,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         var count: Int = 0
 
         snapshot.addOnSuccessListener {
-            it -> count = it.size()
+            it ->
+            if(it.size() > 10){
+                count = 10
+            } else {
+                count = it.size()
+            }
         };
 
         rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {

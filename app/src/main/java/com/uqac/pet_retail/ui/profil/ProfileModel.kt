@@ -1,6 +1,7 @@
 package com.uqac.pet_retail.ui.profil
 
 class ProfileModel {
+    var id: String = ""
     var user: String = ""
     var email: String = ""
     var firstname: String = ""
@@ -9,6 +10,19 @@ class ProfileModel {
     var description: String = ""
     var address: HashMap<String, String> = HashMap()
     var thumbnail: String = ""
+
+    fun toMap(): HashMap<String, Any> {
+        return hashMapOf(
+            "user" to this.user,
+            "email" to this.email,
+            "firstname" to this.firstname,
+            "lastname" to this.lastname,
+            "phone" to this.phone ,
+            "address" to this.address ,
+            "thumbnail" to this.thumbnail,
+            "description" to this.description
+        )
+    }
 
     constructor() {}
 

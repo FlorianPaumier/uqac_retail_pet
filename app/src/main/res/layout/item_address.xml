@@ -37,8 +37,6 @@
                     android:textColor="#F8554A4A"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
-
             </LinearLayout>
 <!--            <LinearLayout-->
 <!--                android:orientation="horizontal"-->
@@ -81,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/address_address"
+                    android:id="@+id/profile_address_address"
                     android:text="Rue saint andré"
                     android:textSize="17sp"
                     android:textColor="@color/black"
@@ -93,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/address_city"
+                        android:id="@+id/profile_address_city"
                         android:text="Montreal jean talon"
                         android:textSize="13sp"
                         android:textColor="#ED5E5E5E"
@@ -103,7 +101,7 @@
                         android:layout_height="wrap_content"
                         card_view:ignore="RtlCompat" />
                     <TextView
-                        android:id="@+id/address_postalCode"
+                        android:id="@+id/profile_address_postalCode"
                         android:text="G7H 4V8"
                         android:textSize="13sp"
                         android:textColor="#ED5E5E5E"
@@ -114,7 +112,7 @@
                         card_view:ignore="RtlCompat" />
                 </LinearLayout>
                 <TextView
-                    android:id="@+id/addres_region"
+                    android:id="@+id/profile_address_region"
                     android:text="Québec"
                     android:textSize="13sp"
                     android:textColor="#ED5E5E5E"
@@ -124,7 +122,7 @@
                     android:layout_height="wrap_content"
                     card_view:ignore="RtlCompat" />
                 <TextView
-                    android:id="@+id/address_county"
+                    android:id="@+id/profile_address_country"
                     android:text="Canada"
                     android:textSize="13sp"
                     android:textColor="#ED5E5E5E"

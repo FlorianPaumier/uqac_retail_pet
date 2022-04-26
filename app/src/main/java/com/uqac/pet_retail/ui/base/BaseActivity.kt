@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 
 
-class BaseActivity : AppCompatActivity() {
+public open class BaseActivity : AppCompatActivity() {
     protected var txtHeading: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +40,6 @@ class BaseActivity : AppCompatActivity() {
         if(fragment != null)
             ft.hide(fragment)
         ft.commit()
-
-
 
         Log.w(ContentValues.TAG, ""+user?.uid)
     }
