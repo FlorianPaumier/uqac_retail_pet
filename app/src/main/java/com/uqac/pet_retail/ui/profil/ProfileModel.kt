@@ -6,6 +6,7 @@ class ProfileModel {
     var firstname: String = ""
     var lastname: String = ""
     var phone: String = ""
+    var description: String = ""
     var address: HashMap<String, String> = HashMap()
     var thumbnail: String = ""
 
@@ -18,6 +19,7 @@ class ProfileModel {
         phone: String,
         lastname: String,
         thumbnail: String,
+        description: String,
         address: HashMap<String, String>
     ) {
         this.user = user
@@ -27,6 +29,7 @@ class ProfileModel {
         this.phone = phone
         this.address = address
         this.thumbnail = thumbnail
+        this.description = description
     }
 
     constructor(data: Map<String, Any>) {
@@ -35,6 +38,7 @@ class ProfileModel {
         this.firstname = data.get("firstname").toString()
         this.lastname = data.get("lastname").toString()
         this.phone = data.get("phone").toString()
+        this.description = data.get("description").toString()
         if (data.get("address") != null) {
             this.address = data.get("address") as HashMap < String, String>
         }

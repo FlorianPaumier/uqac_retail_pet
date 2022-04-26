@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Description"
+                android:text="Name"
                 android:layout_marginStart="10dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -27,12 +27,13 @@
                 android:textColor="#605E5E"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/info"
-            android:text="+1 4389872564"
+            android:id="@+id/user_firstname"
+            android:text="Jhon"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -40,7 +41,18 @@
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/user_lastname"
+            android:text="Weak"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
+        </LinearLayout>
 
 
     </LinearLayout>

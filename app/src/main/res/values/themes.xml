@@ -40,7 +40,13 @@
     </style>
     <style name="CadreImg">
         <item name="cornerSize">10%</item>
+    </style>
 
+    <style name="CadreBtn">
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="cornerSizeTopLeft">50%</item>
+        <item name="cornerSizeBottomRight">50%</item>
     </style>
 
 </resources>

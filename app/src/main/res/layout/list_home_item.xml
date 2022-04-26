@@ -1,64 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardRoom"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="10dp"
-    app:cardMaxElevation="12dp"
-    app:cardPreventCornerOverlap="true"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="25dp">
+    android:layout_centerInParent="true"
+    tools:context=".annonceList">
 
     <TextView
         android:id="@+id/uuid_annonce"
+        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:gravity="center">
 
-        <ImageView
-            android:id="@+id/card_image"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:clickable="false"
-            android:contentDescription="image of pet" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="170dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/user_name1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
-            android:text="Michel Tremblay"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/user_name5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:text="Michel Tremblay"
-            android:textColor="@color/grey_font"
-            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/animalNom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right"
+                    android:text="Jhon Weak"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/profile_1"
-            android:layout_width="165dp"
-            android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/card_btn"
-            android:onClick="getProfile"
-            android:text="Details" />
+                <TextView
+                    android:id="@+id/owner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="right"
+                    android:text="Jhon Weak"
+                    android:textColor="@color/quantum_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/animalNom" />
+
+                <Button
+                    android:id="@+id/details"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:text="Details"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="-5dp"
+                    app:rippleColor="#1D4ED8"
+                    app:shapeAppearanceOverlay="@style/CadreBtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/animalImg"
+        android:layout_width="120dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="60dp"
+        android:padding="1dp"
+        android:src="@drawable/ic_animal"
+        app:shapeAppearanceOverlay="@style/CadreImg" />
+</RelativeLayout>

@@ -28,6 +28,9 @@
             android:name=".annonceList"
             android:exported="false" />
         <activity
+            android:name=".ui.profil.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false" />
         <activity

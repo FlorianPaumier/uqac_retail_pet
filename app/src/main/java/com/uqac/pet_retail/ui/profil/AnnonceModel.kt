@@ -11,13 +11,14 @@ class AnnonceModel {
             "type" to this.type,
             "morningTime" to this.morningTime,
             "afternoonTime" to this.afternoonTime,
-            "nightTimethis" to this.nightTime,
-            "weekTimethis" to this.weekTime,
+            "nightTime" to this.nightTime,
+            "weekTime" to this.weekTime,
             "weekendTime" to this.weekendTime,
             "description" to this.description,
             "user" to this.user,
             "picture" to this.picture,
-            "address" to this.address
+            "address" to this.address,
+            "owner" to this.owner
         )
     }
 
@@ -33,6 +34,7 @@ class AnnonceModel {
     var weekendTime: Boolean = false
     var description: String = ""
     var user: String = ""
+    var owner: String = ""
     var picture: ArrayList<String?> = ArrayList()
 
     constructor() {}
@@ -49,6 +51,7 @@ class AnnonceModel {
         weekTime: Boolean,
         description: String,
         user: String,
+        owner: String,
         picture: ArrayList<String?>,
         address: HashMap<String, String>
     ) {
@@ -65,6 +68,7 @@ class AnnonceModel {
         this.user = user
         this.picture = picture
         this.address = address
+        this.owner = owner
     }
 
 }

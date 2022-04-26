@@ -42,11 +42,9 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
     private lateinit var storage: FirebaseStorage
     private lateinit var db: FirebaseFirestore
     private val PICK_IMAGE_MULTIPLE: Int = 1
-    private val AUTOCOMPLETE_REQUEST_CODE = 10
     private lateinit var binding: ActivityAnnonceBinding
     var pictures: ArrayList<Uri> = ArrayList<Uri>()
     lateinit var imageView: ImageSwitcher
-    var position: Int = 0
     private var currentIndex = 0
     var items: ArrayList<String> = ArrayList<String>()
     var typeAnimal: String? = ""
@@ -77,14 +75,13 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         val week = findViewById<CheckBox>(R.id.pet_time_week)
         val weekend = findViewById<CheckBox>(R.id.pet_time_weekend)
         val description = findViewById<EditText>(R.id.description)
+        findViewById<Button>(R.id.delete_annonce).setOnClickListener(this)
 
         val extras = intent.extras
         if (extras != null) {
             annonce_uid = extras.getString("annonce_uid").toString()
-
             //The key argument here must match that used in the other activity
         }
-        annonce_uid = "6gymG5JfqWqygTe1oPmK"
 
         uid = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -179,7 +176,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
             val docRef = db.collection("annonce").document(annonce_uid!!)
             docRef.get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document.data != null) {
                         Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                         annonce = document.toObject<AnnonceModel>()!!
                         name.setText(annonce.name)
@@ -208,6 +205,8 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
                 }
+        }else{
+            annonce = AnnonceModel()
         }
     }
 
@@ -215,6 +214,18 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         when (v.id) {
             R.id.add_pictures -> openGalery()
             R.id.valid_annonce -> validForm()
+            R.id.delete_picture -> deleteAnnonce()
+        }
+    }
+
+    private fun deleteAnnonce() {
+        for (file in annonce.picture){
+            ref.child(file!!).delete()
+        }
+        db.collection("annonce").document(annonce_uid!!).delete().addOnSuccessListener {
+            var intent = Intent(this, ProfileActivity::class.java)
+            Toast.makeText(this, "Annonce supprimé", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
         }
     }
 
@@ -251,10 +262,6 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
             return;
         }
 
-        if (annonce == null){
-            annonce = AnnonceModel()
-        }
-
         annonce.name = petName
         annonce.type = typeAnimal!!
         annonce.race = petRace
@@ -267,6 +274,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         annonce.user = uid!!
         annonce.picture = picturesId
         annonce.address = profile.address
+        annonce.owner = profile.firstname + " " + profile.lastname
 
         if (annonce_uid != null){
             db.collection("annonce").document(annonce_uid!!)
@@ -278,7 +286,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(this, ProfileActivity::class.java)
-                    //startActivity(intent)
+                    startActivity(intent)
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding Udpating", e)
@@ -294,7 +302,7 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
                        Toast.LENGTH_SHORT
                    ).show()
                    val intent = Intent(this, ProfileActivity::class.java)
-                   //startActivity(intent)
+                   startActivity(intent)
                }
                .addOnFailureListener { e ->
                    Log.w(TAG, "Error adding Annonce", e)
@@ -364,22 +372,6 @@ class AnnonceActivity : AppCompatActivity(), View.OnClickListener,AdapterView.On
         // Another interface callback
     }
 
-    private fun getImageBitmap(url: String): Bitmap? {
-        var bm: Bitmap? = null
-        try {
-            val aURL = URL(url)
-            val conn: URLConnection = aURL.openConnection()
-            conn.connect()
-            val `is`: InputStream = conn.getInputStream()
-            val bis = BufferedInputStream(`is`)
-            bm = BitmapFactory.decodeStream(bis)
-            bis.close()
-            `is`.close()
-        } catch (e: IOException) {
-            Log.e(TAG, "Error getting bitmap", e)
-        }
-        return bm
-    }
 
     public fun deletePicture(uri: Uri){
         if(annonce.picture.contains(uri.lastPathSegment)){

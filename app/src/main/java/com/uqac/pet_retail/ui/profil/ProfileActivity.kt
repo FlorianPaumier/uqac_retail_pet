@@ -5,19 +5,19 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.Tag
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 
@@ -25,28 +25,46 @@ import com.uqac.pet_retail.R
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var bdd: CollectionReference
-    private lateinit var profile: DocumentReference
+    private lateinit var profile: ProfileModel
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profil)
-//        val dogname = findViewById<View>(R.id.dog_name) as TextView
-//        val dogage = findViewById<View>(R.id.dog_age) as TextView
+
         val info = findViewById<View>(R.id.info) as TextView
         val email = findViewById<View>(R.id.email) as TextView
-//        val addressname = findViewById<View>(R.id.address_name) as TextView
-        val address = findViewById<View>(R.id.address) as TextView
-//        var profileid = intent.getStringExtra("profile_id")
-//        println(profileid)
+        val firstName = findViewById<View>(R.id.user_firstname) as TextView
+        val lastName = findViewById<View>(R.id.user_lastname) as TextView
+        val mobile = findViewById<View>(R.id.user_phone) as TextView
+        val thumbnail = findViewById<ImageView>(R.id.thumbnail)
+        val newAnnonce = findViewById<Button>(R.id.new_annonce)
+        val location = findViewById<Button>(R.id.addBbtn)
 
         val user = FirebaseAuth.getInstance().currentUser
         bdd = Firebase.firestore.collection("profile")
+        var profileUid: String? = null;
 
-        findViewById<Button>(R.id.new_annonce).setOnClickListener {
+        val extras = intent.extras
+        if (extras != null) {
+            profileUid = extras.getString("profile_uid").toString()
+            Log.w("Uid", profileUid.toString())
+            Log.w("Uid", user?.uid.toString())
+            if (user?.uid !== profileUid){
+                newAnnonce.visibility = View.GONE
+            }else{
+                location.visibility = View.GONE
+            }
+            //The key argument here must match that used in the other activity
+        }else{
+            location.visibility = View.GONE
+        }
+
+        newAnnonce.setOnClickListener {
             val intent = Intent(this, AnnonceActivity::class.java)
             startActivity(intent)
         }
+
         bdd.whereEqualTo("user", user?.uid)
             .get()
             .addOnSuccessListener { documents ->
@@ -54,12 +72,17 @@ class ProfileActivity : AppCompatActivity() {
                     val newProfile = hashMapOf(
                         "user" to user?.uid
                     )
-
                     bdd.add(newProfile)
                 } else {
                     for (document in documents) {
                         Log.w(TAG, "ID : " + document.id)
-                        profile = document.reference
+                        profile = document.toObject<ProfileModel>()
+                        email.text = profile.email
+                        firstName.text = profile.firstname
+                        lastName.text = profile.lastname
+                        mobile.text = profile.phone
+                        info.text = profile.description
+                        Glide.with(this).load(profile.thumbnail).into(thumbnail)
                     }
                 }
             }
@@ -67,40 +90,43 @@ class ProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
 
+        val manager: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = manager.beginTransaction()
+        val fragment: Fragment? = manager.findFragmentById(R.id.menu_fragment)
+        if(fragment != null)
+            ft.hide(fragment)
+        ft.commit()
+    }
 
-//        when (profileid) {
-//            "1" -> {
-//                dogname.text = "Arlo"
-//                dogage.text = "20 Kg"
-//                email.text = "michel.tremblay@gmail.com"
-//                info.text = "+1-581-447-3011"
-//                addressname.text = "Residence YC"
-//                address.text = "256 Rue Begin,\nG7H 4M5, Chicoutimi"
-//            }
-//            "2" -> {
-//                dogname.text = "Lucy"
-//                dogage.text = "15 Kg"
-//                email.text = "leclerc.delapierre@gmail.com"
-//                info.text = "+1-581-281-4821"
-//                addressname.text = ""
-//                address.text = "241 Rue Morin,\nG7H 4X8, Chicoutimi"
-//            }
-//            "3" -> {
-//                dogname.text = "Charlie"
-//                dogage.text = "18 Kg"
-//                email.text = "edourad.smith@gmail.com"
-//                info.text = "+1-486-548-1254"
-//                addressname.text = ""
-//                address.text = "1287 Boulevard du Saguenay Est,\nG7H 1G7, Chicoutimi"
-//            }
-//            "4" -> {
-//                dogname.text = "Molly"
-//                dogage.text = "35 Kg"
-//                email.text = "edith.roy@gmail.com"
-//                info.text = "+1-218-118-3482"
-//                addressname.text = ""
-//                address.text = "2675 Boulevard du Royaume,\n QC G7S 5B8,\nJonquiere"
-//            }
-//        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.menu -> {
+                val manager: FragmentManager = supportFragmentManager
+                val ft: FragmentTransaction = manager.beginTransaction()
+                val fragment: Fragment? = manager.findFragmentById(R.id.menu_fragment)
+                val home = findViewById<ScrollView>(R.id.homeView)
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                if(item.isChecked) {
+                    item.setIcon(R.drawable.ic_baseline_menu_24)
+                    item.isChecked = false
+                    home.visibility = View.VISIBLE
+                    if(fragment != null)
+                        ft.hide(fragment)
+                }
+                else {
+                    item.setIcon(R.drawable.ic_baseline_close_24)
+                    item.isChecked = true
+                    ft.addToBackStack(null)
+                    if(fragment != null)
+                        ft.show(fragment)
+                    home.visibility = View.INVISIBLE
+                }
+                ft.commit()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 }
