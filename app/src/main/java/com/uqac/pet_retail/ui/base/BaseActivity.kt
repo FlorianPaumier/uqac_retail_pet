@@ -7,9 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ScrollView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -18,30 +16,12 @@ import com.google.firebase.ktx.Firebase
 import com.uqac.pet_retail.R
 
 
-class BaseActivity : AppCompatActivity() {
-    protected var txtHeading: TextView? = null
-
+abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        binding = ActivityHomeBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
-        val card = findViewById<CardView>(R.id.card_home_container)
-
-        supportActionBar?.title = "Home"
-
         val auth = Firebase.auth
         val user = auth.currentUser
-
-        val manager: FragmentManager = supportFragmentManager
-        val ft: FragmentTransaction = manager.beginTransaction()
-        val fragment: Fragment? = manager.findFragmentById(R.id.menu_fragment)
-        if(fragment != null)
-            ft.hide(fragment)
-        ft.commit()
-
-
 
         Log.w(ContentValues.TAG, ""+user?.uid)
     }
@@ -83,8 +63,13 @@ class BaseActivity : AppCompatActivity() {
         }
 
     }
-    protected fun setHeading(resId: Int) {
-//        if (tv_title == null) txtHeading = findViewById(R.id.tv_title)
-//        if (tv_title != null) txtHeading!!.setText(resId)
+
+    fun hideMenu() {
+        val manager: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = manager.beginTransaction()
+        val fragment: Fragment? = manager.findFragmentById(R.id.menu_fragment)
+        if(fragment != null)
+            ft.hide(fragment)
+        ft.commit()
     }
 }
