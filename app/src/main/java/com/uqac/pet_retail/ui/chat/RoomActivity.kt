@@ -53,27 +53,30 @@ class RoomActivity : AppCompatActivity() {
         rv.adapter = roomAdapter
 
         bdd.collection("rooms").document(auth.uid)
-            .get().addOnSuccessListener {
-            result ->
-            val rooms = result.toObject<UserRoomsModel>()!!
-            Log.w("Rooms", rooms.toString())
-            for (room in rooms.rooms){
-                database.child("rooms").orderByKey().equalTo(room)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            findViewById<View>(R.id.animationView).visibility = View.GONE
+            .get().addOnSuccessListener { result ->
+                if (result.data !== null) {
+                    val rooms = result.toObject<UserRoomsModel>()!!
+                    Log.w("Rooms", rooms.toString())
+                    for (room in rooms.rooms) {
+                        database.child("rooms").orderByKey().equalTo(room)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    findViewById<View>(R.id.animationView).visibility = View.GONE
 
-                            generateItems(dataSnapshot)
+                                    generateItems(dataSnapshot)
 
-                            Log.e("Data", "onDataChange: " + data.size)
-                        }
+                                    Log.e("Data", "onDataChange: " + data.size)
+                                }
 
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            println("The read failed: " + databaseError.code)
-                        }
-                    })
+                                override fun onCancelled(databaseError: DatabaseError) {
+                                    println("The read failed: " + databaseError.code)
+                                }
+                            })
+                    }
+                } else {
+                    findViewById<View>(R.id.animationView).visibility = View.GONE
+                }
             }
-        }
 
     }
 

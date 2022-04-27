@@ -78,7 +78,7 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
                     hasThumbnail = true
                     imageUri = it
                 }
-            }else{
+            } else {
                 Glide.with(this)
                     .load(R.drawable.ic_use)
                     .into(thumbnail)
@@ -109,9 +109,9 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
         profile.address["postalCade"] =
             findViewById<EditText>(R.id.address_postalCode).text.toString()
 
-        if (imageUri == null){
+        if (imageUri == null) {
             deletePicture()
-        }else if (imageUri !== null && !hasThumbnail){
+        } else if (imageUri !== null && !hasThumbnail) {
             val riversRef = ref.child("images/profile").child("${imageUri!!.lastPathSegment}")
             val uploadTask = riversRef.putFile(imageUri!!)
             profile.thumbnail = "images/profile/${imageUri!!.lastPathSegment}"
@@ -125,10 +125,9 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
             }
         }
 
-        if (profile.user.isNotEmpty()){
+        if (profile.user.isNotEmpty()) {
             bdd.document(profile.id)
-                .update(profile.toMap()).addOnSuccessListener {
-                        it ->
+                .update(profile.toMap()).addOnSuccessListener { it ->
                     Toast.makeText(
                         this,
                         "Annonce Updated",
@@ -139,9 +138,10 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding Udpating", e)
-                    Toast.makeText(this, "Error adding Annonce" + e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error adding Annonce" + e.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
-        }else{
+        } else {
             bdd.add(profile)
                 .addOnSuccessListener { documentReference ->
                     Log.d(ContentValues.TAG, "Annonce added with ID: ${documentReference.id}")
@@ -155,7 +155,8 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding Annonce", e)
-                    Toast.makeText(this, "Error adding Annonce" + e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error adding Annonce" + e.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
         }
 
@@ -188,6 +189,10 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
     }
 
     public fun deletePicture() {
+        if (imageUri == null) {
+            return;
+        }
+
         profile.thumbnail = ""
         ref.child(imageUri!!.lastPathSegment!!).delete()
         uploadUri = ""

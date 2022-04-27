@@ -29,6 +29,11 @@
             <!--                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
             <!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
 
+            <ImageView
+                android:layout_gravity="center"
+                android:background="@mipmap/ic_launcher_round"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/choose_a_pe"
                 android:layout_width="233dp"
